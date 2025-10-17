@@ -1,0 +1,177 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Usuario Demo",
+      "email": "demo@fintrack.test",
+      "password": "password",
+      "onboarding": {
+        "frequentCategories": [],
+        "incomeSource": "",
+        "incomeAmount": 0,
+        "budgetsByCategory": [],
+        "goals": [],
+        "notifications": {
+          "email": true,
+          "push": false,
+          "thresholds": {
+            "budgetPercent": 80
+          }
+        }
+      }
+    }
+  ],
+  "balances": {
+    "current": 1200,
+    "available": 600
+  },
+  "movements": [
+    {
+      "id": 1,
+      "title": "Alquiler",
+      "amount": -500,
+      "category": "Vivienda",
+      "date": "2025-10-01"
+    },
+    {
+      "id": 2,
+      "title": "Sueldo",
+      "amount": 2000,
+      "category": "Ingresos",
+      "date": "2025-10-05"
+    },
+    {
+      "id": 3,
+      "title": "Supermercado",
+      "amount": -120,
+      "category": "Compras",
+      "date": "2025-10-07"
+    }
+  ],
+  "budgets": [
+    {
+      "id": 1,
+      "category": "Vivienda",
+      "limit": 600,
+      "spent": 500
+    },
+    {
+      "id": 2,
+      "category": "Entretenimiento",
+      "limit": 150,
+      "spent": 120
+    },
+    {
+      "category": "",
+      "limit": 0,
+      "spent": 0,
+      "id": 3
+    },
+    {
+      "category": "",
+      "limit": 0,
+      "spent": 0,
+      "id": 4
+    },
+    {
+      "category": "",
+      "limit": 0,
+      "spent": 0,
+      "id": 5
+    },
+    {
+      "category": "",
+      "limit": 0,
+      "spent": 0,
+      "id": 6
+    },
+    {
+      "category": "VIDEOJUEGOS",
+      "limit": 500,
+      "spent": 0,
+      "id": 7
+    },
+    {
+      "id": 8,
+      "category": "Entretenimiento",
+      "limit": 2000,
+      "spent": 0
+    },
+    {
+      "id": 9,
+      "category": "Compras",
+      "limit": 10000,
+      "spent": 0
+    }
+  ],
+  "goals": [
+    {
+      "id": 1,
+      "title": "Vacaciones",
+      "targetAmount": 2000,
+      "targetDate": "2026-06-01",
+      "savedAmount": 150
+    },
+    {
+      "id": 2,
+      "title": "Moto",
+      "targetAmount": 3000,
+      "targetDate": "2026-12-01",
+      "savedAmount": 0
+    },
+    {
+      "id": 3,
+      "title": "YATE",
+      "targetAmount": 2600000,
+      "targetDate": "2050-09-06",
+      "savedAmount": 0
+    },
+    {
+      "id": 4,
+      "title": "MOTO",
+      "targetAmount": 20000,
+      "targetDate": "5666-03-31",
+      "savedAmount": 0
+    },
+    {
+      "id": 5,
+      "title": "SANCRIS",
+      "targetAmount": 6000000,
+      "targetDate": "2029-02-28",
+      "savedAmount": 0
+    }
+  ],
+  "statistics": {
+    "monthly": [
+      {
+        "month": "Enero",
+        "income": 2000,
+        "expenses": 1500
+      },
+      {
+        "month": "Febrero",
+        "income": 2100,
+        "expenses": 1600
+      },
+      {
+        "month": "Marzo",
+        "income": 2200,
+        "expenses": 1400
+      }
+    ],
+    "byCategory": [
+      {
+        "category": "Compras",
+        "amount": 400
+      },
+      {
+        "category": "Transporte",
+        "amount": 150
+      },
+      {
+        "category": "Vivienda",
+        "amount": 500
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { register } from '../api'
+
+export default function RegisterPage(){
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(null)
+  const nav = useNavigate()
+
+  async function onSubmit(e){
+    e.preventDefault()
+    setError(null)
+    setSuccess(null)
+    if (!name || !email || !password) return setError('Rellena todos los campos')
+    try{
+      const user = await register(name, email, password)
+      setSuccess('Cuenta creada. Redirigiendo al inicio de sesión...')
+      setTimeout(()=>nav('/login'), 900)
+    }catch(err){
+      setError(err.response?.data?.message || 'Error')
+    }
+  }
+
+  return (
+    <div className="page center">
+      <form className="card small" onSubmit={onSubmit}>
+        <h2>Registro</h2>
+        {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
+        <label>Nombre completo<input value={name} onChange={e=>setName(e.target.value)} /></label>
+        <label>Correo electrónico<input value={email} onChange={e=>setEmail(e.target.value)} /></label>
+        <label>Contraseña<input type="password" value={password} onChange={e=>setPassword(e.target.value)} /></label>
+        <div className="row" style={{marginTop:8}}>
+          <button className="btn">Crear cuenta</button>
+          <button type="button" className="btn ghost" onClick={()=>nav('/login')}>Volver al login</button>
+        </div>
+      </form>
+    </div>
+  )
+}

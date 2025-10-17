@@ -1,0 +1,58 @@
+:root{
+  /* Pastel palette (based on original look) */
+  --bg: #e9eef6; /* light pastel background */
+  --muted: #6b7780;
+  --card: #ffffff;
+  --accent-1: #8ec7b6; /* pastel teal */
+  --accent-2: #f7b267; /* pastel orange / gold */
+  --accent-3: #c7b8f5; /* pastel purple */
+  --text: #1f2d3d;
+}
+*{box-sizing:border-box;font-family:Inter, system-ui, Arial, sans-serif}
+.body{margin:0}
+.body{margin:0}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter, system-ui, Arial, sans-serif}
+.app{display:flex;min-height:100vh}
+.sidebar{width:240px;background:linear-gradient(180deg,var(--accent-3),var(--accent-1));color:#082032;padding:20px}
+.sidebar .brand{font-weight:700;font-size:20px;margin-bottom:12px}
+.sidebar nav a{display:block;color:#082032;text-decoration:none;padding:8px 0}
+.sidebar nav a.active{font-weight:700}
+.topbar{padding:16px;background:transparent}
+main{flex:1;padding:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.card.full{grid-column:span 2}
+.center{display:flex;align-items:center;justify-content:center;height:100vh}
+.small{width:320px}
+.btn{background:var(--accent-2);border:none;padding:8px 12px;border-radius:8px;color:#082032;cursor:pointer}
+.btn.ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--muted)}
+.success{color:#22c55e;margin-bottom:8px}
+.label{display:block;margin:8px 0;color:var(--muted)}
+input{width:100%;padding:8px;border-radius:6px;border:1px solid #e6eef3;background:var(--card);color:var(--text)}
+.error{color:#b00020;margin-bottom:8px}
+
+/* Auth-specific card: ensure inputs are visible and form is isolated */
+.auth-card{background:var(--card);color:var(--text);padding:18px;border-radius:10px;box-shadow:0 4px 12px rgba(31,45,61,0.06)}
+.page.center{background:transparent}
+.row{display:flex;gap:8px}
+
+/* Accessibility notes: use high-contrast text on pastel backgrounds; avoid relying solely on color */
+
+/* Dashboard styles */
+.dashboard-grid{display:flex;gap:18px}
+.left{flex:1}
+.right{width:340px}
+.kpi-row{display:flex;gap:12px;margin-bottom:12px}
+.kpi-card{background:linear-gradient(180deg,#082233,#0b2f40);padding:12px;border-radius:10px;flex:1}
+.kpi-card.small{max-width:180px}
+.kpi-title{color:var(--muted);font-size:13px}
+.kpi-value{font-size:20px;font-weight:700}
+.wallet-panel{position:sticky;top:20px}
+.movements ul{list-style:none;padding:0;margin:0}
+.movements li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f3f5}
+.movements li.expense .mv-right{color:#d9480f}
+.movements li.income .mv-right{color:#2563eb}
+.mv-left{display:flex;flex-direction:column}
+.mv-cat{font-size:12px;color:var(--muted)}
+.stats-chart{margin-bottom:12px}
+

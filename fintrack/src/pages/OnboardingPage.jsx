@@ -25,10 +25,10 @@ export default function OnboardingPage(){
   }
 
   async function finish(){
-    if (!user) return nav('/login')
     await saveOnboarding(user.id, data)
-    // after saving, log out so user can re-login or just navigate to dashboard
-    nav('/')
+logout() // cerrar sesión
+nav('/login') // regresar al login
+
   }
 
   return (

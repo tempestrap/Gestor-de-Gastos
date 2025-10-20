@@ -24,7 +24,27 @@
       "id": 2,
       "name": "Kristel Guadalupe Guillen Velasco",
       "email": "kris.guillen18@gmail.com",
-      "password": "1234"
+      "password": "1234",
+      "onboarding": {
+        "frequentCategories": [],
+        "incomeSource": "",
+        "incomeAmount": 0,
+        "budgetsByCategory": [],
+        "goals": [],
+        "notifications": {
+          "email": true,
+          "push": false,
+          "thresholds": {
+            "budgetPercent": 80
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "name": "MARCOS FERNANDO MORALES ESCOBAR",
+      "email": "marquitosfer09@gmail.com",
+      "password": "AAaa1122"
     }
   ],
   "balances": {

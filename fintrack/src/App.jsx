@@ -9,14 +9,13 @@ import StatsPage from './pages/StatsPage'
 import WalletPage from './pages/WalletPage'
 import { useAuth } from './AuthContext'
 
-function Protected({ children }){
-  const { user } = useAuth();
-  // If not logged in, go to login
+function Protected({ children }) {
+  const { user } = useAuth()
   if (!user) return <Navigate to="/login" replace />
-  // If logged in but hasn't completed onboarding, redirect to onboarding
-  if (user && !user.onboarding) return <Navigate to="/onboarding" replace />
+  if (user.onboarding === false) return <Navigate to="/onboarding" replace />
   return children
 }
+
 
 export default function App(){
   return (

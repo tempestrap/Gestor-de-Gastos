@@ -45,6 +45,12 @@
       "name": "MARCOS FERNANDO MORALES ESCOBAR",
       "email": "marquitosfer09@gmail.com",
       "password": "AAaa1122"
+    },
+    {
+      "id": 4,
+      "name": "MARCOS",
+      "email": "marquitosfer099@gmail.com",
+      "password": "AAaa"
     }
   ],
   "balances": {

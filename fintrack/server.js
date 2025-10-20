@@ -3,15 +3,28 @@ const fs = require('fs');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const DB_FILE = './db.json';
+const path = require('path');
+const DB_FILE = path.resolve(__dirname, 'db.json');
 
 function readDB() {
-  const raw = fs.readFileSync(DB_FILE);
-  return JSON.parse(raw);
+  if (!fs.existsSync(DB_FILE)) {
+    // If DB file missing, initialize a minimal structure
+    const initial = { users: [], balances: {}, movements: [], budgets: [], goals: [], statistics: {} };
+    writeDB(initial);
+    return initial;
+  }
+  const raw = fs.readFileSync(DB_FILE, 'utf8');
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    console.error('Error parsing DB file:', err);
+    // repair by returning empty structure to avoid crashing
+    return { users: [], balances: {}, movements: [], budgets: [], goals: [], statistics: {} };
+  }
 }
 
 function writeDB(data) {
-  fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
+  fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
 }
 
 const app = express();

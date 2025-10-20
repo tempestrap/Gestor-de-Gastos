@@ -19,6 +19,12 @@
           }
         }
       }
+    },
+    {
+      "id": 2,
+      "name": "Kristel Guadalupe Guillen Velasco",
+      "email": "kris.guillen18@gmail.com",
+      "password": "1234"
     }
   ],
   "balances": {

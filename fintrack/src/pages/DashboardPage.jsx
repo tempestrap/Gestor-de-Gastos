@@ -5,13 +5,19 @@ import KpiCard from '../components/KpiCard'
 import WalletPanel from '../components/WalletPanel'
 import Movements from '../components/Movements'
 import StatsChart from '../components/StatsChart'
+import { useAuth } from "../AuthContext";
+
 
 export default function DashboardPage() {
   const [data, setData] = useState(null)
+  const { user } = useAuth()
 
   useEffect(() => {
-    fetchDashboard().then(setData).catch(() => {})
-  }, [])
+    if (user?.id) {
+      fetchDashboard(user.id).then(setData).catch(console.error)
+    }
+  }, [user])
+
 
   const wallets = [
     { category: 'Vivienda', amount: 2000 },

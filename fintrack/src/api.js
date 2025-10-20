@@ -17,10 +17,11 @@ export async function saveOnboarding(userId, onboarding){
   return res.data
 }
 
-export async function fetchDashboard(){
-  const res = await API.get('/data/dashboard')
+export async function fetchDashboard(userId) {
+  const res = await API.get(`/data/dashboard?userId=${userId}`)
   return res.data
 }
+
 
 export async function fetchStats(){
   const res = await API.get('/data/statistics')

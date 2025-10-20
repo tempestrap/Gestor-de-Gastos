@@ -2,8 +2,9 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import Logo from '../assets/logo.svg'
-import IconWallet from '../assets/icon-wallet.svg'
-import IconBudget from '../assets/icon-budget.svg'
+import { AiOutlineHome, AiOutlineWallet } from 'react-icons/ai'
+import { FiBarChart2 } from 'react-icons/fi'
+import { RiFolder3Line } from 'react-icons/ri'
 
 export default function Sidebar(){
   const { user, logout } = useAuth()
@@ -21,15 +22,17 @@ export default function Sidebar(){
 
       <nav>
         <NavLink to="/" end className={({isActive})=> isActive? 'active':''}>
-          <img src={'/src/assets/icon-home.svg'} alt="" style={{verticalAlign:'middle',marginRight:8}}/>Inicio
+          <AiOutlineHome style={{verticalAlign:'middle',marginRight:8}}/> Inicio
         </NavLink>
         <NavLink to="/wallet" className={({isActive})=> isActive? 'active':''}>
-          <img src={IconWallet} alt="" style={{verticalAlign:'middle',marginRight:8}}/>Cartera
+          <AiOutlineWallet style={{verticalAlign:'middle',marginRight:8}}/> Cartera
         </NavLink>
         <NavLink to="/budgets" className={({isActive})=> isActive? 'active':''}>
-          <img src={IconBudget} alt="" style={{verticalAlign:'middle',marginRight:8}}/>Presupuestos
+          <RiFolder3Line style={{verticalAlign:'middle',marginRight:8}}/> Presupuestos
         </NavLink>
-        <NavLink to="/stats" className={({isActive})=> isActive? 'active':''}>Estadísticas</NavLink>
+        <NavLink to="/stats" className={({isActive})=> isActive? 'active':''}>
+          <FiBarChart2 style={{verticalAlign:'middle',marginRight:8}}/> Estadísticas
+        </NavLink>
       </nav>
 
       <div style={{marginTop:'auto'}}>

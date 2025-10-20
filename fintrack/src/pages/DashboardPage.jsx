@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
 import Sidebar from '../components/Sidebar'
 import { fetchDashboard, createMovement } from '../api'
 import KpiCard from '../components/KpiCard'
@@ -14,6 +16,7 @@ export default function DashboardPage() {
   const [mvTitle, setMvTitle] = useState('')
   const [mvAmount, setMvAmount] = useState('')
   const [mvCategory, setMvCategory] = useState('')
+  const [mvType, setMvType] = useState('gasto')
   const [saving, setSaving] = useState(false)
   const [mvError, setMvError] = useState(null)
   const [mvSuccess, setMvSuccess] = useState(null)
@@ -32,10 +35,12 @@ export default function DashboardPage() {
     e.preventDefault()
     setMvError(null)
     setMvSuccess(null)
-    if (!mvTitle || !mvAmount) return setMvError('Rellena descripción y monto')
-    // normalize possible comma or currency chars
-    const amount = Number(String(mvAmount).replace(/[^0-9.-]+/g, ''))
-    if (isNaN(amount)) return setMvError('Monto inválido')
+  if (!mvTitle || !mvAmount) return setMvError('Rellena descripción y monto')
+  // normalize possible comma or currency chars
+  let amount = Number(String(mvAmount).replace(/[^0-9.-]+/g, ''))
+  if (isNaN(amount)) return setMvError('Monto inválido')
+  if (mvType === 'gasto' && amount > 0) amount = -Math.abs(amount)
+  if (mvType === 'ingreso' && amount < 0) amount = Math.abs(amount)
     setSaving(true)
     try{
       await createMovement({ userId: user.id, title: mvTitle, amount: amount, category: mvCategory })
@@ -101,7 +106,16 @@ export default function DashboardPage() {
                 </div>
                 <form onSubmit={submitMovement} className="form-row form-quick">
                   <input placeholder="Descripción" value={mvTitle} onChange={e=>setMvTitle(e.target.value)} />
-                  <input className="small" placeholder="Monto (negativo = gasto)" value={mvAmount} onChange={e=>setMvAmount(e.target.value)} />
+                  <Tippy content="Selecciona si es gasto o ingreso. Esto afecta el signo (gastos = negativo)">
+                    <div style={{display:'flex',flexDirection:'column'}}>
+                      <select value={mvType} onChange={e=>setMvType(e.target.value)} style={{width:140,padding:10,borderRadius:8,border:'1px solid rgba(15,23,36,0.06)',background:'var(--card)'}}>
+                        <option value="gasto">Gasto</option>
+                        <option value="ingreso">Ingreso</option>
+                      </select>
+                      <div style={{fontSize:11,color:'var(--muted)',marginTop:6}}>Tipo: afecta el signo del monto</div>
+                    </div>
+                  </Tippy>
+                  <input className="small" placeholder="Cantidad" value={mvAmount} onChange={e=>setMvAmount(e.target.value)} />
                   <input className="medium" placeholder="Categoría" value={mvCategory} onChange={e=>setMvCategory(e.target.value)} />
                   <button className="btn" disabled={saving}>{saving? 'Guardando...' : 'Registrar'}</button>
                 </form>

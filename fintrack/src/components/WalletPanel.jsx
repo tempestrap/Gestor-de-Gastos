@@ -1,5 +1,7 @@
 import React from 'react'
 import Logo from '../assets/logo.svg'
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
 
 export default function WalletPanel({ balances, wallets }){
   return (
@@ -22,16 +24,18 @@ export default function WalletPanel({ balances, wallets }){
       <div style={{fontSize:14,fontWeight:700,marginBottom:8}}>Presupuestos</div>
       <div style={{display:'grid',gap:12}}>
         {wallets && wallets.length ? wallets.map((w,i)=> (
-          <div key={i}>
+          <div key={i} className="budget-item">
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
               <div style={{display:'flex',alignItems:'center',gap:8}}>
-                <div style={{width:36,height:36,borderRadius:8,background:'linear-gradient(90deg,var(--accent-a),var(--accent-b))',display:'grid',placeItems:'center',color:'#072024',fontWeight:800}}>{w.category?.charAt(0)}</div>
+                <div className="budget-icon">{w.category?.charAt(0)}</div>
                 <div>{w.category}</div>
               </div>
               <div style={{fontWeight:700}}>${w.amount}</div>
             </div>
             <div className="budget-progress" style={{marginTop:8}}>
-              <i style={{width: `${Math.min(100, (w.amount / ( (w.limit||1) )) * 100)}%`}}></i>
+              <Tippy content={`Presupuesto ${w.category}: ${Math.round(((w.amount||0)/(w.limit||1))*100)}% gastado`}>
+                <i style={{width: `${Math.min(100, (w.amount / ( (w.limit||1) )) * 100)}%`}}></i>
+              </Tippy>
             </div>
           </div>
         )) : (

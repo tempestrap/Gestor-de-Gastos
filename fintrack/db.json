@@ -141,8 +141,8 @@
       "available": 3000
     },
     "3": {
-      "current": 6000,
-      "available": 6000
+      "current": 4200,
+      "available": 4200
     },
     "4": {
       "current": 2400,
@@ -157,6 +157,14 @@
       "amount": 1800,
       "category": "Vivienda",
       "date": "2025-10-20T05:36:42.351Z"
+    },
+    {
+      "id": 2,
+      "ownerId": 3,
+      "title": "Pago de renta",
+      "amount": -1800,
+      "category": "Vivienda",
+      "date": "2025-10-20T05:47:02.150Z"
     }
   ],
   "budgets": [
@@ -178,7 +186,7 @@
       "id": 3,
       "category": "Vivienda",
       "limit": 1800,
-      "spent": 1800,
+      "spent": 3600,
       "ownerId": 3
     },
     {

@@ -32,6 +32,15 @@ html,body{height:100%}
 .sidebar nav a:hover{background:rgba(255,255,255,0.5)}
 .sidebar nav a.active{font-weight:700;background:linear-gradient(90deg,var(--accent-b),var(--accent-c));color:#07303a}
 
+/* Sidebar icon style */
+.sidebar nav a svg{width:20px;height:20px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));padding:6px;border-radius:8px;color:#072024}
+
+/* Global font and spacing tweaks */
+body{font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;letter-spacing:0.1px}
+.kpi-card .kpi-title{font-size:13px}
+.kpi-card .kpi-value{font-size:24px}
+.card{padding:20px}
+
 /* Topbar / Main */
 .topbar{padding:18px 0}
 main{flex:1;padding:28px}
@@ -93,6 +102,37 @@ input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid
 .wallet-panel{position:sticky;top:22px}
 .wallet-balance{display:flex;flex-direction:column;gap:4px}
 .wallet-balance .big{font-size:22px;font-weight:800}
+.budget-item{background:linear-gradient(180deg,var(--card),#fbfbff);padding:10px;border-radius:10px}
+.budget-item .budget-icon{width:36px;height:36;border-radius:8px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));display:grid;place-items:center;color:#072024;font-weight:800}
+.budget-progress{height:10px;background:linear-gradient(90deg,#f1f5f9,#f1f5f9);border-radius:10px;overflow:hidden}
+.budget-progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-b),var(--accent-c));width:0%}
+
+/* Wallet page specific layout and styles */
+.wallet-grid{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+.wallet-left{display:flex;flex-direction:column;gap:16px}
+.wallet-right{display:flex;flex-direction:column;gap:14px}
+
+.balance-card{background:linear-gradient(135deg,var(--accent-d),var(--accent-c));color:#042d29;padding:18px;border-radius:14px;box-shadow:var(--shadow-1)}
+.wallet-large{font-size:28px;font-weight:900}
+.wallet-small{font-size:16px;font-weight:700;color:rgba(7,32,36,0.85)}
+
+.budget-card{background:linear-gradient(180deg,var(--card),#fbfbff);padding:12px;border-radius:12px;box-shadow:var(--shadow-2)}
+.budget-card .budget-icon{width:40px;height:40;border-radius:10px;background:linear-gradient(90deg,var(--accent-a),var(--accent-d));display:grid;place-items:center;color:#072024;font-weight:900}
+.budget-card .muted{font-size:12px}
+.budget-card .budget-progress{height:8px;border-radius:8px;overflow:hidden;margin-top:8px}
+.budget-card .budget-progress > i{background:linear-gradient(90deg,var(--accent-b),var(--accent-c));height:100%;display:block}
+
+.empty-state{padding:28px;text-align:center}
+
+@media (max-width:980px){
+  .wallet-grid{grid-template-columns:1fr;}
+  .wallet-right{order:2}
+  .wallet-left{order:1}
+}
+
+/* Stats page cards */
+.stats-page .card{padding:18px;border-radius:14px}
+.stats-graph{display:flex;gap:18px;align-items:flex-start}
 .movements ul{list-style:none;padding:0;margin:0}
 .movements li{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(10,20,30,0.04);align-items:center}
 .movements .mv-left{display:flex;align-items:center;gap:12px}

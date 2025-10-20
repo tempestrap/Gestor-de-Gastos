@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="64" viewBox="0 0 480 128" role="img" aria-label="Fintrack logo">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0%" stop-color="#f6d365"/>
+      <stop offset="50%" stop-color="#fda085"/>
+      <stop offset="100%" stop-color="#d4a017"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" x2="1">
+      <stop offset="0%" stop-color="#ffd97a"/>
+      <stop offset="100%" stop-color="#b8860b"/>
+    </linearGradient>
+  </defs>
+  <!-- badge icon -->
+  <g transform="translate(12,12)">
+    <circle cx="36" cy="36" r="34" fill="url(#g2)" stroke="#b8860b" stroke-width="2"/>
+    <path d="M24 48 L36 28 L48 48 Z" fill="#fff" opacity="0.85"/>
+    <rect x="30" y="24" width="12" height="6" rx="2" fill="#fff" opacity="0.9"/>
+  </g>
+  <!-- logotype -->
+  <text x="100" y="76" font-family="'Segoe UI', Roboto, Inter, Arial, sans-serif" font-weight="700" font-size="48" fill="url(#g1)">
+    FINTRACK
+  </text>
+  <text x="100" y="100" font-family="'Segoe UI', Roboto, Inter, Arial, sans-serif" font-size="12" fill="#6b6b6b">Controla tu dinero, alcanza tus metas</text>
+</svg>

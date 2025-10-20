@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { register } from '../api'
+import Logo from '../assets/logo.svg'
 
 export default function RegisterPage(){
   const [name, setName] = useState('')
@@ -26,13 +27,26 @@ export default function RegisterPage(){
 
   return (
     <div className="page center">
-      <form className="card small" onSubmit={onSubmit}>
-        <h2>Registro</h2>
+      <form className="auth-card" onSubmit={onSubmit}>
+        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:12}}>
+          <img src={Logo} alt="Fintrack" style={{width:48,height:48}} />
+          <div>
+            <h2 style={{margin:0}}>Crear cuenta</h2>
+            <div className="muted" style={{fontSize:13}}>Regístrate en segundos</div>
+          </div>
+        </div>
+
         {error && <div className="error">{error}</div>}
         {success && <div className="success">{success}</div>}
-        <label>Nombre completo<input value={name} onChange={e=>setName(e.target.value)} /></label>
-        <label>Correo electrónico<input value={email} onChange={e=>setEmail(e.target.value)} /></label>
-        <label>Contraseña<input type="password" value={password} onChange={e=>setPassword(e.target.value)} /></label>
+        <label className="label">Nombre completo
+          <input value={name} onChange={e=>setName(e.target.value)} />
+        </label>
+        <label className="label">Correo electrónico
+          <input value={email} onChange={e=>setEmail(e.target.value)} />
+        </label>
+        <label className="label">Contraseña
+          <input type="password" value={password} onChange={e=>setPassword(e.target.value)} />
+        </label>
         <div className="row" style={{marginTop:8}}>
           <button className="btn">Crear cuenta</button>
           <button type="button" className="btn ghost" onClick={()=>nav('/login')}>Volver al login</button>

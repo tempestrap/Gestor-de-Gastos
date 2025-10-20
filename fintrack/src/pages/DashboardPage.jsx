@@ -6,6 +6,7 @@ import WalletPanel from '../components/WalletPanel'
 import Movements from '../components/Movements'
 import StatsChart from '../components/StatsChart'
 import { useAuth } from "../AuthContext";
+import Logo from '../assets/logo.svg'
 
 
 export default function DashboardPage() {
@@ -26,60 +27,43 @@ export default function DashboardPage() {
   ]
 
   return (
-    <div className="flex min-h-screen bg-[#d9e2ec] font-sans">
-      {/* Sidebar */}
+    <div className="app">
       <Sidebar />
 
-      {/* Main */}
-      <main className="flex-1 p-6">
-        {/* Header */}
-        <header className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-[#2c3e50]">Bienvenido xxxx!</h1>
-          <img
-            src="/logo.png"
-            alt="Fintrack Logo"
-            className="w-12 h-12 object-contain rounded-full shadow-md"
-          />
+      <main>
+        <header className="topbar" style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+          <div style={{display:'flex',alignItems:'center',gap:14}}>
+            <img src={Logo} alt="Fintrack" style={{width:56,height:56}} />
+            <div>
+              <h1 style={{margin:0,fontSize:24,fontWeight:800}}>Bienvenido {user?.name ?? 'Usuario'}</h1>
+              <div className="muted">Resumen de tu actividad</div>
+            </div>
+          </div>
         </header>
 
-        {/* Dashboard Grid */}
-        <section className="grid grid-cols-3 gap-6">
-          {/* LEFT SECTION */}
-          <div className="col-span-2 flex flex-col gap-6">
-            {/* KPI Row */}
-            <div className="grid grid-cols-3 gap-4">
-              <KpiCard title="Ingresos" value={`$${data?.balances?.current ?? 0}`} color="green" />
-              <KpiCard
-                title="Gastos"
-                value={`$${(data?.balances?.current ?? 0) - (data?.balances?.available ?? 0)}`}
-                color="red"
-              />
-              <KpiCard
-                title="Disponible"
-                value={`$${data?.balances?.available ?? 0}`}
-                color="blue"
-                small
-              />
+        <section className="dashboard-grid">
+          <div className="left">
+            <div className="kpi-row">
+              <KpiCard title="Ingresos" value={`$${data?.balances?.current ?? 0}`} />
+              <KpiCard title="Gastos" value={`$${(data?.balances?.current ?? 0) - (data?.balances?.available ?? 0)}`} />
+              <KpiCard title="Disponible" value={`$${data?.balances?.available ?? 0}`} small />
             </div>
 
-            {/* Chart */}
-            <div className="bg-white rounded-2xl shadow-md p-4">
+            <div className="card subtle">
               <StatsChart monthly={data?.statistics?.monthly} />
             </div>
 
-            {/* Movements */}
-            <div className="bg-white rounded-2xl shadow-md p-4">
-              <h2 className="text-lg font-semibold text-gray-700 mb-3">Movimientos recientes</h2>
+            <div className="card">
+              <h2 style={{marginTop:0}}>Movimientos recientes</h2>
               <Movements items={data?.recent} />
             </div>
           </div>
 
-          {/* RIGHT SECTION - Wallet */}
-          <div className="col-span-1">
-            <div className="bg-white rounded-2xl shadow-md p-4">
+          <aside className="right">
+            <div className="card">
               <WalletPanel balances={data?.balances} wallets={wallets} />
             </div>
-          </div>
+          </aside>
         </section>
       </main>
     </div>

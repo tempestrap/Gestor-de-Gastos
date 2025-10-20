@@ -81,6 +81,60 @@
         },
         "initialBudget": 4200
       }
+    },
+    {
+      "id": 4,
+      "name": "RAPTOR",
+      "email": "marquitosfer09@gmail.com",
+      "password": "AAaa1122",
+      "onboarding": {
+        "frequentCategories": [
+          "Entretenimiento",
+          "Transporte",
+          "Compras",
+          "Comida"
+        ],
+        "incomeSource": "SEMANA",
+        "incomeAmount": 2400,
+        "budgetsByCategory": [
+          {
+            "category": "Entretenimiento",
+            "limit": 130,
+            "spent": 0
+          },
+          {
+            "category": "Transporte",
+            "limit": 400,
+            "spent": 0
+          },
+          {
+            "category": "Compras",
+            "limit": 1000,
+            "spent": 0
+          },
+          {
+            "category": "Comida",
+            "limit": 700,
+            "spent": 0
+          }
+        ],
+        "goals": [
+          {
+            "title": "PECERA",
+            "targetAmount": 200,
+            "targetDate": "2025-12-04",
+            "savedAmount": 0
+          }
+        ],
+        "notifications": {
+          "email": true,
+          "push": false,
+          "thresholds": {
+            "budgetPercent": 80
+          }
+        },
+        "initialBudget": 2400
+      }
     }
   ],
   "balances": {
@@ -91,6 +145,10 @@
     "3": {
       "current": 4200,
       "available": 4200
+    },
+    "4": {
+      "current": 2400,
+      "available": 2400
     }
   },
   "movements": [],
@@ -129,6 +187,34 @@
       "limit": 540,
       "spent": 0,
       "ownerId": 3
+    },
+    {
+      "id": 6,
+      "category": "Entretenimiento",
+      "limit": 130,
+      "spent": 0,
+      "ownerId": 4
+    },
+    {
+      "id": 7,
+      "category": "Transporte",
+      "limit": 400,
+      "spent": 0,
+      "ownerId": 4
+    },
+    {
+      "id": 8,
+      "category": "Compras",
+      "limit": 1000,
+      "spent": 0,
+      "ownerId": 4
+    },
+    {
+      "id": 9,
+      "category": "Comida",
+      "limit": 700,
+      "spent": 0,
+      "ownerId": 4
     }
   ],
   "goals": [
@@ -147,6 +233,14 @@
       "targetDate": "2025-11-19",
       "savedAmount": 0,
       "ownerId": 3
+    },
+    {
+      "id": 3,
+      "title": "PECERA",
+      "targetAmount": 200,
+      "targetDate": "2025-12-04",
+      "savedAmount": 0,
+      "ownerId": 4
     }
   ],
   "statistics": {}

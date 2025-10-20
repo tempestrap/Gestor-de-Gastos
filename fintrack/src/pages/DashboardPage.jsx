@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
+import { FiArrowUpRight, FiArrowDownLeft, FiDollarSign } from 'react-icons/fi'
 import Sidebar from '../components/Sidebar'
 import { fetchDashboard, createMovement } from '../api'
 import KpiCard from '../components/KpiCard'
@@ -64,11 +65,12 @@ export default function DashboardPage() {
         <div className="dashboard-container">
           <header className="topbar">
             <div className="brand-row">
-              <img src={Logo} alt="Fintrack" style={{width:56,height:56}} />
+              <img src={Logo} alt="Fintrack" className={`brand-logo brand-logo--contrast`} style={{width:56,height:56}} />
               <div>
                 <h1>Bienvenido {user?.name ?? 'Usuario'}</h1>
                 <div className="subtitle">Resumen de tu actividad</div>
               </div>
+              
             </div>
           </header>
 
@@ -89,9 +91,9 @@ export default function DashboardPage() {
 
                     return (
                       <>
-                        <KpiCard title="Ingresos" value={`$${totalIngresos}`} />
-                        <KpiCard title="Gastos" value={`$${totalGastos}`} />
-                        <KpiCard title="Disponible" value={`$${disponible}`} small />
+                        <KpiCard title="Ingresos" value={`$${totalIngresos}`} icon={<FiArrowUpRight size={18} color="#0b69ff"/>} />
+                        <KpiCard title="Gastos" value={`$${totalGastos}`} icon={<FiArrowDownLeft size={18} color="#d94600"/>} />
+                        <KpiCard title="Disponible" value={`$${disponible}`} small icon={<FiDollarSign size={18} color="#065f46"/>} />
                       </>
                     )
                   })()

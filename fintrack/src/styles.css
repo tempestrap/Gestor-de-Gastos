@@ -1,15 +1,15 @@
 :root{
   /* Palette inspired by the samples (soft pastels + gold accents) */
   --bg: #fbfbfd; /* almost white for elegance */
-  --muted: #6b7780;
+  --muted: #54606a; /* slightly darker for better contrast */
   --card: #ffffff;
-  --text: #0f1724;
+  --text: #071422; /* darker text for readability */
 
   /* Accent gradient colors */
-  --accent-a: #cbb4ff; /* lavender */
-  --accent-b: #fbc2eb; /* pink */
+  --accent-a: #d6c6ff; /* soft lavender */
+  --accent-b: #ffd6e8; /* soft pink */
   --accent-c: #ffd486; /* gold */
-  --accent-d: #9be7c4; /* mint */
+  --accent-d: #bff0d6; /* mint-soft */
 
   --glass: rgba(255,255,255,0.7);
   --shadow-1: 0 8px 24px rgba(16,24,40,0.08);
@@ -25,6 +25,15 @@ html,body{height:100%}
 .sidebar{width:260px;padding:22px;background:linear-gradient(180deg,var(--accent-a),var(--accent-d));border-right:1px solid rgba(15,23,36,0.04);display:flex;flex-direction:column;gap:12px}
 .brand{display:flex;align-items:center;gap:12px}
 .brand img{width:44px;height:44px;border-radius:8px;box-shadow:var(--shadow-2)}
+/* Logo visibility tweaks */
+.brand-logo{width:56px;height:56px;border-radius:12px;box-shadow:0 12px 30px rgba(7,32,36,0.12);border:2px solid rgba(255,255,255,0.6)}
+/* Logo variants */
+.brand-logo--default{filter:none;}
+.brand-logo--contrast{filter:drop-shadow(0 10px 30px rgba(7,32,36,0.2)) saturate(125%) contrast(115%);border-color:rgba(255,255,255,0.95)}
+.brand-logo--soft{filter:grayscale(.02) brightness(1.02);opacity:0.98}
+/* ensure default landing uses contrast variant (safer for visibility) */
+.brand-logo.brand-logo--default{filter:none}
+.brand-logo.brand-logo--contrast{filter:drop-shadow(0 10px 30px rgba(7,32,36,0.2)) saturate(125%) contrast(115%)}
 .brand .title{font-weight:800;font-size:20px;letter-spacing:0.6px}
 .brand .tag{font-size:12px;color:var(--muted)}
 .sidebar nav{margin-top:6px}
@@ -33,7 +42,7 @@ html,body{height:100%}
 .sidebar nav a.active{font-weight:700;background:linear-gradient(90deg,var(--accent-b),var(--accent-c));color:#07303a}
 
 /* Sidebar icon style */
-.sidebar nav a svg{width:20px;height:20px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));padding:6px;border-radius:8px;color:#072024}
+.sidebar nav a svg{width:20px;height:20px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));padding:6px;border-radius:8px;color:#072024;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.06))}
 
 /* Global font and spacing tweaks */
 body{font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;letter-spacing:0.1px}
@@ -68,8 +77,10 @@ main{flex:1;padding:28px}
  .btn{transition:transform .12s ease, box-shadow .12s ease}
  .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
 /* focus and accessibility */
-input:focus, select:focus, textarea:focus, .btn:focus{outline:3px solid rgba(203,180,255,0.28);outline-offset:2px}
-input:focus{box-shadow:0 6px 18px rgba(139,92,246,0.06)}
+input:focus, select:focus, textarea:focus, .btn:focus{outline:3px solid rgba(99,102,241,0.18);outline-offset:2px}
+input:focus{box-shadow:0 6px 18px rgba(99,102,241,0.06)}
+.btn:focus{outline-color: rgba(99,102,241,0.28)}
+.sidebar nav a:focus{outline:2px solid rgba(7,48,61,0.08);outline-offset:3px}
 
 /* subtle entrance animation */
 @keyframes popIn { from { opacity:0; transform: translateY(8px) scale(.995) } to { opacity:1; transform:none } }
@@ -121,6 +132,14 @@ input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid
 .budget-card .muted{font-size:12px}
 .budget-card .budget-progress{height:8px;border-radius:8px;overflow:hidden;margin-top:8px}
 .budget-card .budget-progress > i{background:linear-gradient(90deg,var(--accent-b),var(--accent-c));height:100%;display:block}
+
+/* micro-interactions */
+.budget-card{transition:transform .18s ease, box-shadow .18s ease, border-color .12s ease}
+.budget-card:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(10,20,30,0.08)}
+.movements li{transition:background .12s ease,transform .12s ease}
+.movements li:hover{background:rgba(10,20,30,0.02);transform:translateY(-2px)}
+.btn{transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease}
+.btn:active{transform:translateY(0)}
 
 .empty-state{padding:28px;text-align:center}
 

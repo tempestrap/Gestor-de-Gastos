@@ -1,4 +1,7 @@
 import React from 'react'
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css'
+import { FiClock } from 'react-icons/fi'
 
 function CategoryIcon({ category }){
   const map = {
@@ -18,13 +21,18 @@ export default function Movements({ items }){
       {items?.length ? (
         <ul>
           {items.map(m=> (
-            <li key={m.id} className={m.amount < 0 ? 'expense' : 'income'}>
-              <div style={{display:'flex',alignItems:'center',gap:12}}>
-                <CategoryIcon category={m.category} />
-                <div className="mv-left">{m.title}<div className="mv-cat">{m.category}</div></div>
-              </div>
-              <div className="mv-right">${Math.abs(m.amount)}</div>
-            </li>
+            <Tippy key={m.id} content={`Fecha: ${new Date(m.date).toLocaleString()}`}>
+              <li className={m.amount < 0 ? 'expense' : 'income'} style={{cursor:'pointer',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                <div style={{display:'flex',alignItems:'center',gap:12}}>
+                  <CategoryIcon category={m.category} />
+                  <div className="mv-left">{m.title}<div className="mv-cat">{m.category}</div></div>
+                </div>
+                <div style={{display:'flex',alignItems:'center',gap:8}}>
+                  <div className="mv-right">${Math.abs(m.amount)}</div>
+                  <FiClock size={14} color="rgba(7,32,36,0.35)" />
+                </div>
+              </li>
+            </Tippy>
           ))}
         </ul>
       ) : (

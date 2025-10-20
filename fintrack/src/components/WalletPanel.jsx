@@ -2,6 +2,7 @@ import React from 'react'
 import Logo from '../assets/logo.svg'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
+import { FiCreditCard, FiPieChart } from 'react-icons/fi'
 
 export default function WalletPanel({ balances, wallets }){
   return (
@@ -9,7 +10,10 @@ export default function WalletPanel({ balances, wallets }){
       <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:12}}>
         <img src={Logo} alt="Fintrack" style={{width:48,height:48,borderRadius:10}} />
         <div className="wallet-balance">
-          <div className="muted" style={{fontSize:12}}>Saldo actual</div>
+          <div style={{display:'flex',alignItems:'center',gap:8}}>
+            <FiCreditCard size={18} color="#07303a" />
+            <div className="muted" style={{fontSize:12}}>Saldo actual</div>
+          </div>
           <div className="big">${balances?.current ?? 0}</div>
         </div>
       </div>
@@ -22,12 +26,12 @@ export default function WalletPanel({ balances, wallets }){
       <hr style={{border:'none',height:1,background:'rgba(10,20,30,0.04)',margin:'12px 0'}}/>
 
       <div style={{fontSize:14,fontWeight:700,marginBottom:8}}>Presupuestos</div>
-      <div style={{display:'grid',gap:12}}>
+              <div style={{display:'grid',gap:12}}>
         {wallets && wallets.length ? wallets.map((w,i)=> (
           <div key={i} className="budget-item">
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
               <div style={{display:'flex',alignItems:'center',gap:8}}>
-                <div className="budget-icon">{w.category?.charAt(0)}</div>
+                <div className="budget-icon"><FiPieChart size={16} color="#072024"/></div>
                 <div>{w.category}</div>
               </div>
               <div style={{fontWeight:700}}>${w.amount}</div>

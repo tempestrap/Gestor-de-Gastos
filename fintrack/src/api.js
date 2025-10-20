@@ -18,18 +18,18 @@ export async function saveOnboarding(userId, onboarding){
 }
 
 export async function fetchDashboard(userId) {
-  const res = await API.get(`/data/dashboard?userId=${userId}`)
+  const res = await API.get('/data/dashboard', { params: userId ? { userId } : {} })
   return res.data
 }
 
 
-export async function fetchStats(){
-  const res = await API.get('/data/statistics')
+export async function fetchStats(userId){
+  const res = await API.get('/data/statistics', { params: userId ? { userId } : {} })
   return res.data
 }
 
-export async function fetchBudgets(){
-  const res = await API.get('/data/budgets')
+export async function fetchBudgets(userId){
+  const res = await API.get('/data/budgets', { params: userId ? { userId } : {} })
   return res.data
 }
 

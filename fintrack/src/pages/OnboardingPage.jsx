@@ -4,7 +4,7 @@ import { useAuth } from '../AuthContext'
 import { saveOnboarding } from '../api'
 
 export default function OnboardingPage() {
-  const { user, logout } = useAuth()
+  const { user, logout, setUser } = useAuth()
   const nav = useNavigate()
   const [step, setStep] = useState(1)
   const [data, setData] = useState({
@@ -29,11 +29,19 @@ export default function OnboardingPage() {
   }
 
   async function finish() {
-    await saveOnboarding(user.id, data)
-    logout() // cerrar sesión
-    nav('/login') // regresar al login
+    try{
+      const res = await saveOnboarding(user.id, data)
+      // res.user is a sanitized user object with onboarding
+      if (res?.user) {
+        // update auth context user so the app reflects onboarding immediately
+        setUser(prev => ({ ...prev, ...res.user }))
+      }
+      // redirect to dashboard
+      nav('/')
+    }catch(err){
+      console.error('Onboarding save failed', err)
+    }
   }
-
   return (
     <div className="page center">
       <div className="auth-card" style={{ maxWidth: 600 }}>

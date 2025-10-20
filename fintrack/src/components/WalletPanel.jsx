@@ -21,7 +21,7 @@ export default function WalletPanel({ balances, wallets }){
 
       <div style={{fontSize:14,fontWeight:700,marginBottom:8}}>Carteras</div>
       <div style={{display:'grid',gap:8}}>
-        {wallets?.map((w,i)=> (
+        {wallets && wallets.length ? wallets.map((w,i)=> (
           <div key={i} style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
             <div style={{display:'flex',alignItems:'center',gap:8}}>
               <div style={{width:36,height:36,borderRadius:8,background:'linear-gradient(90deg,var(--accent-a),var(--accent-b))',display:'grid',placeItems:'center',color:'#072024',fontWeight:800}}>{w.category?.charAt(0)}</div>
@@ -29,7 +29,9 @@ export default function WalletPanel({ balances, wallets }){
             </div>
             <div style={{fontWeight:700}}>${w.amount}</div>
           </div>
-        ))}
+        )) : (
+          <div className="muted">Sin carteras definidas. Crea una desde Presupuestos.</div>
+        )}
       </div>
     </aside>
   )

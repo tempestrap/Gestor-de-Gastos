@@ -16,15 +16,16 @@ export default function DashboardPage() {
   useEffect(() => {
     if (user?.id) {
       fetchDashboard(user.id).then(setData).catch(console.error)
+    } else {
+      setData(null)
     }
   }, [user])
 
 
   const wallets = [
-    { category: 'Vivienda', amount: 2000 },
-    { category: 'Compras', amount: 600 },
-    { category: 'Cine', amount: 450 }
+    // wallets are now driven by user data (budgets or custom wallets)
   ]
+ 
 
   return (
     <div className="app">
@@ -55,13 +56,13 @@ export default function DashboardPage() {
 
             <div className="card">
               <h2 style={{marginTop:0}}>Movimientos recientes</h2>
-              <Movements items={data?.recent} />
+              {data?.recent?.length ? <Movements items={data.recent} /> : <div className="muted">No hay movimientos todavía.</div>}
             </div>
           </div>
 
           <aside className="right">
             <div className="card">
-              <WalletPanel balances={data?.balances} wallets={wallets} />
+              {data ? <WalletPanel balances={data.balances} wallets={data.budgets?.map(b=>({ category: b.category, amount: b.spent }))} /> : <div className="muted">Cargando cartera...</div>}
             </div>
           </aside>
         </section>

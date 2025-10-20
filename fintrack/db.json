@@ -1,209 +1,153 @@
 {
+  "test": 1760930574654,
   "users": [
     {
       "id": 1,
-      "name": "Usuario Demo",
-      "email": "demo@fintrack.test",
-      "password": "password",
+      "name": "AutoTest",
+      "email": "autotest1760931789673@test.local",
+      "password": "p",
       "onboarding": {
-        "frequentCategories": [],
-        "incomeSource": "",
-        "incomeAmount": 0,
-        "budgetsByCategory": [],
-        "goals": [],
-        "notifications": {
-          "email": true,
-          "push": false,
-          "thresholds": {
-            "budgetPercent": 80
+        "incomeAmount": 3000,
+        "budgetsByCategory": [
+          {
+            "category": "Comida",
+            "limit": 300
+          },
+          {
+            "category": "Transporte",
+            "limit": 80
           }
-        }
+        ],
+        "goals": [
+          {
+            "title": "Vacaciones",
+            "targetAmount": 1000,
+            "targetDate": "2025-12-31"
+          }
+        ]
       }
     },
     {
       "id": 2,
-      "name": "Kristel Guadalupe Guillen Velasco",
+      "name": "AutoTest",
+      "email": "autotest1760932053541@test.local",
+      "password": "p",
+      "onboarding": null
+    },
+    {
+      "id": 3,
+      "name": "Kristel",
       "email": "kris.guillen18@gmail.com",
       "password": "1234",
       "onboarding": {
-        "frequentCategories": [],
-        "incomeSource": "",
-        "incomeAmount": 0,
-        "budgetsByCategory": [],
-        "goals": [],
+        "frequentCategories": [
+          "Vivienda",
+          "Transporte",
+          "Comida"
+        ],
+        "incomeSource": "Papá",
+        "incomeAmount": 4200,
+        "budgetsByCategory": [
+          {
+            "category": "Vivienda",
+            "limit": 1800,
+            "spent": 0
+          },
+          {
+            "category": "Transporte",
+            "limit": 980,
+            "spent": 0
+          },
+          {
+            "category": "Comida",
+            "limit": 540,
+            "spent": 0
+          }
+        ],
+        "goals": [
+          {
+            "title": "Pecera",
+            "targetAmount": 600,
+            "targetDate": "2025-11-19",
+            "savedAmount": 0
+          }
+        ],
         "notifications": {
           "email": true,
           "push": false,
           "thresholds": {
             "budgetPercent": 80
           }
-        }
+        },
+        "initialBudget": 4200
       }
-    },
-    {
-      "id": 3,
-      "name": "MARCOS FERNANDO MORALES ESCOBAR",
-      "email": "marquitosfer09@gmail.com",
-      "password": "AAaa1122"
-    },
-    {
-      "id": 4,
-      "name": "MARCOS",
-      "email": "marquitosfer099@gmail.com",
-      "password": "AAaa"
     }
   ],
   "balances": {
-    "current": 1200,
-    "available": 600
-  },
-  "movements": [
-    {
-      "id": 1,
-      "title": "Alquiler",
-      "amount": -500,
-      "category": "Vivienda",
-      "date": "2025-10-01"
+    "1": {
+      "current": 3000,
+      "available": 3000
     },
-    {
-      "id": 2,
-      "title": "Sueldo",
-      "amount": 2000,
-      "category": "Ingresos",
-      "date": "2025-10-05"
-    },
-    {
-      "id": 3,
-      "title": "Supermercado",
-      "amount": -120,
-      "category": "Compras",
-      "date": "2025-10-07"
+    "3": {
+      "current": 4200,
+      "available": 4200
     }
-  ],
+  },
+  "movements": [],
   "budgets": [
     {
       "id": 1,
-      "category": "Vivienda",
-      "limit": 600,
-      "spent": 500
+      "category": "Comida",
+      "limit": 300,
+      "spent": 0,
+      "ownerId": 1
     },
     {
       "id": 2,
-      "category": "Entretenimiento",
-      "limit": 150,
-      "spent": 120
-    },
-    {
-      "category": "",
-      "limit": 0,
+      "category": "Transporte",
+      "limit": 80,
       "spent": 0,
-      "id": 3
+      "ownerId": 1
     },
     {
-      "category": "",
-      "limit": 0,
+      "id": 3,
+      "category": "Vivienda",
+      "limit": 1800,
       "spent": 0,
-      "id": 4
+      "ownerId": 3
     },
     {
-      "category": "",
-      "limit": 0,
+      "id": 4,
+      "category": "Transporte",
+      "limit": 980,
       "spent": 0,
-      "id": 5
+      "ownerId": 3
     },
     {
-      "category": "",
-      "limit": 0,
+      "id": 5,
+      "category": "Comida",
+      "limit": 540,
       "spent": 0,
-      "id": 6
-    },
-    {
-      "category": "VIDEOJUEGOS",
-      "limit": 500,
-      "spent": 0,
-      "id": 7
-    },
-    {
-      "id": 8,
-      "category": "Entretenimiento",
-      "limit": 2000,
-      "spent": 0
-    },
-    {
-      "id": 9,
-      "category": "Compras",
-      "limit": 10000,
-      "spent": 0
+      "ownerId": 3
     }
   ],
   "goals": [
     {
       "id": 1,
       "title": "Vacaciones",
-      "targetAmount": 2000,
-      "targetDate": "2026-06-01",
-      "savedAmount": 150
+      "targetAmount": 1000,
+      "targetDate": "2025-12-31",
+      "savedAmount": 0,
+      "ownerId": 1
     },
     {
       "id": 2,
-      "title": "Moto",
-      "targetAmount": 3000,
-      "targetDate": "2026-12-01",
-      "savedAmount": 0
-    },
-    {
-      "id": 3,
-      "title": "YATE",
-      "targetAmount": 2600000,
-      "targetDate": "2050-09-06",
-      "savedAmount": 0
-    },
-    {
-      "id": 4,
-      "title": "MOTO",
-      "targetAmount": 20000,
-      "targetDate": "5666-03-31",
-      "savedAmount": 0
-    },
-    {
-      "id": 5,
-      "title": "SANCRIS",
-      "targetAmount": 6000000,
-      "targetDate": "2029-02-28",
-      "savedAmount": 0
+      "title": "Pecera",
+      "targetAmount": 600,
+      "targetDate": "2025-11-19",
+      "savedAmount": 0,
+      "ownerId": 3
     }
   ],
-  "statistics": {
-    "monthly": [
-      {
-        "month": "Enero",
-        "income": 2000,
-        "expenses": 1500
-      },
-      {
-        "month": "Febrero",
-        "income": 2100,
-        "expenses": 1600
-      },
-      {
-        "month": "Marzo",
-        "income": 2200,
-        "expenses": 1400
-      }
-    ],
-    "byCategory": [
-      {
-        "category": "Compras",
-        "amount": 400
-      },
-      {
-        "category": "Transporte",
-        "amount": 150
-      },
-      {
-        "category": "Vivienda",
-        "amount": 500
-      }
-    ]
-  }
+  "statistics": {}
 }

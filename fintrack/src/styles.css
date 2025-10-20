@@ -48,9 +48,14 @@ input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid
 
 .label{display:block;margin:8px 0;color:var(--muted)}
 .error{color:#b00020;margin-bottom:8px}
+.success{color:#007a3d;margin-bottom:8px}
 
 /* AUTH */
 .auth-card{max-width:520px;margin:40px auto;padding:28px;border-radius:16px;background:linear-gradient(180deg,var(--glass),var(--card));box-shadow:var(--shadow-1)}
+
+.page.center{min-height:80vh;display:flex;align-items:center;justify-content:center}
+
+.row{display:flex;gap:8px}
 
 /* Dashboard layout */
 .dashboard-grid{display:flex;gap:22px}

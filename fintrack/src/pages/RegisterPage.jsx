@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { register } from '../api'
+import { useAuth } from '../AuthContext'
 import Logo from '../assets/logo.svg'
 
 export default function RegisterPage() {
@@ -10,6 +11,7 @@ export default function RegisterPage() {
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
   const nav = useNavigate()
+  const { login } = useAuth()
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -20,11 +22,18 @@ export default function RegisterPage() {
 
     try {
       const user = await register(name, email, password)
-      setSuccess('Cuenta creada. Redirigiendo al onboarding...')
-      
-      // ✅ redirige al onboarding después del registro
-      setTimeout(() => nav('/onboarding', { state: { user } }), 900)
-      
+      setSuccess('Cuenta creada. Iniciando sesión...')
+
+      // Iniciar sesión automáticamente después de registrar y actualizar contexto
+      try {
+        await login(email, password)
+      } catch (e) {
+        console.warn('Auto-login failed', e)
+      }
+
+      // Redirige al onboarding
+      setTimeout(() => nav('/onboarding', { state: { user } }), 700)
+
     } catch (err) {
       setError(err.response?.data?.message || 'Error al crear la cuenta')
     }

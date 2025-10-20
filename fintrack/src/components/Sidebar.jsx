@@ -18,10 +18,10 @@ export default function Sidebar(){
       {user && <div className="muted">Hola, {user.name}</div>}
 
       <nav>
-        <NavLink to="/">Inicio</NavLink>
+        <NavLink to="/" end>Inicio</NavLink>
         <NavLink to="/wallet">Cartera</NavLink>
         <NavLink to="/budgets">Presupuestos</NavLink>
-        <NavLink to="/stats">Estadisticas</NavLink>
+        <NavLink to="/stats">Estadísticas</NavLink>
       </nav>
 
       <div style={{marginTop:'auto'}}>

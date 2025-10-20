@@ -16,17 +16,21 @@ function CategoryIcon({ category }){
 export default function Movements({ items }){
   return (
     <div className="movements">
-      <ul>
-        {items?.map(m=> (
-          <li key={m.id} className={m.amount < 0 ? 'expense' : 'income'}>
-            <div style={{display:'flex',alignItems:'center',gap:12}}>
-              <CategoryIcon category={m.category} />
-              <div className="mv-left">{m.title}<div className="mv-cat">{m.category}</div></div>
-            </div>
-            <div className="mv-right">${Math.abs(m.amount)}</div>
-          </li>
-        ))}
-      </ul>
+      {items?.length ? (
+        <ul>
+          {items.map(m=> (
+            <li key={m.id} className={m.amount < 0 ? 'expense' : 'income'}>
+              <div style={{display:'flex',alignItems:'center',gap:12}}>
+                <CategoryIcon category={m.category} />
+                <div className="mv-left">{m.title}<div className="mv-cat">{m.category}</div></div>
+              </div>
+              <div className="mv-right">${Math.abs(m.amount)}</div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="muted">Aún no hay movimientos.</div>
+      )}
     </div>
   )
 }

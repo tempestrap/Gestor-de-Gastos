@@ -8,10 +8,10 @@ export default function WalletPanel({ balances, wallets }){
   return (
     <aside className="wallet-panel card">
       <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:12}}>
-        <img src={Logo} alt="Fintrack" style={{width:48,height:48,borderRadius:10}} />
+        <img src={Logo} alt="Fintrack" className="brand-logo brand-logo--contrast" style={{width:56,height:56,borderRadius:10}} />
         <div className="wallet-balance">
           <div style={{display:'flex',alignItems:'center',gap:8}}>
-            <FiCreditCard size={18} color="#07303a" />
+            <FiCreditCard className="icon-strong" size={20} color="#07303a" />
             <div className="muted" style={{fontSize:12}}>Saldo actual</div>
           </div>
           <div className="big">${balances?.current ?? 0}</div>
@@ -30,8 +30,8 @@ export default function WalletPanel({ balances, wallets }){
         {wallets && wallets.length ? wallets.map((w,i)=> (
           <div key={i} className="budget-item">
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-              <div style={{display:'flex',alignItems:'center',gap:8}}>
-                <div className="budget-icon"><FiPieChart size={16} color="#072024"/></div>
+                <div style={{display:'flex',alignItems:'center',gap:8}}>
+                <div className="budget-icon"><FiPieChart className="icon-strong" size={18} color="#072024"/></div>
                 <div>{w.category}</div>
               </div>
               <div style={{fontWeight:700}}>${w.amount}</div>

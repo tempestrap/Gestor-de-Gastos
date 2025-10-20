@@ -24,16 +24,16 @@ export default function Sidebar(){
 
       <nav>
         <NavLink to="/" end className={({isActive})=> isActive? 'active':''}>
-          <Tippy content="Inicio"><span style={{display:'inline-flex',alignItems:'center'}}><AiOutlineHome style={{verticalAlign:'middle',marginRight:8}}/> Inicio</span></Tippy>
+          <Tippy content="Inicio"><span style={{display:'inline-flex',alignItems:'center'}}><AiOutlineHome className="icon-strong" style={{verticalAlign:'middle',marginRight:10}} size={22}/> Inicio</span></Tippy>
         </NavLink>
         <NavLink to="/wallet" className={({isActive})=> isActive? 'active':''}>
-          <Tippy content="Cartera"><span style={{display:'inline-flex',alignItems:'center'}}><AiOutlineWallet style={{verticalAlign:'middle',marginRight:8}}/> Cartera</span></Tippy>
+          <Tippy content="Cartera"><span style={{display:'inline-flex',alignItems:'center'}}><AiOutlineWallet className="icon-strong" style={{verticalAlign:'middle',marginRight:10}} size={22}/> Cartera</span></Tippy>
         </NavLink>
         <NavLink to="/budgets" className={({isActive})=> isActive? 'active':''}>
-          <Tippy content="Presupuestos"><span style={{display:'inline-flex',alignItems:'center'}}><RiFolder3Line style={{verticalAlign:'middle',marginRight:8}}/> Presupuestos</span></Tippy>
+          <Tippy content="Presupuestos"><span style={{display:'inline-flex',alignItems:'center'}}><RiFolder3Line className="icon-strong" style={{verticalAlign:'middle',marginRight:10}} size={20}/> Presupuestos</span></Tippy>
         </NavLink>
         <NavLink to="/stats" className={({isActive})=> isActive? 'active':''}>
-          <Tippy content="Estadísticas"><span style={{display:'inline-flex',alignItems:'center'}}><FiBarChart2 style={{verticalAlign:'middle',marginRight:8}}/> Estadísticas</span></Tippy>
+          <Tippy content="Estadísticas"><span style={{display:'inline-flex',alignItems:'center'}}><FiBarChart2 className="icon-strong" style={{verticalAlign:'middle',marginRight:10}} size={20}/> Estadísticas</span></Tippy>
         </NavLink>
       </nav>
 

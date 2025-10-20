@@ -12,7 +12,7 @@ function CategoryIcon({ category }){
     'Transporte': (<svg width="20" height="20" viewBox="0 0 24 24"><rect x="3" y="10" width="18" height="6" fill="#fff"/></svg>),
     'Comida': (<svg width="20" height="20" viewBox="0 0 24 24"><path d="M7 3v10" stroke="#fff" strokeWidth="2"/><path d="M17 3v10" stroke="#fff" strokeWidth="2"/></svg>)
   }
-  return <div style={{width:44,height:44,display:'grid',placeItems:'center',borderRadius:10,background:'linear-gradient(90deg,var(--accent-b),var(--accent-a))',boxShadow:'var(--shadow-2)'}}>{map[category] ?? <span style={{color:'#fff'}}>•</span>}</div>
+  return <div className="mv-icon icon-strong" style={{width:56,height:56,display:'grid',placeItems:'center',borderRadius:12,background:'linear-gradient(90deg,var(--accent-b),var(--accent-a))',boxShadow:'var(--shadow-2)'}}>{map[category] ?? <span style={{color:'#fff'}}>•</span>}</div>
 }
 
 export default function Movements({ items }){
@@ -27,9 +27,9 @@ export default function Movements({ items }){
                   <CategoryIcon category={m.category} />
                   <div className="mv-left">{m.title}<div className="mv-cat">{m.category}</div></div>
                 </div>
-                <div style={{display:'flex',alignItems:'center',gap:8}}>
+                <div style={{display:'flex',alignItems:'center',gap:10}}>
                   <div className="mv-right">${Math.abs(m.amount)}</div>
-                  <FiClock size={14} color="rgba(7,32,36,0.35)" />
+                  <FiClock size={20} color="rgba(7,32,36,0.75)" className="icon-strong" />
                 </div>
               </li>
             </Tippy>

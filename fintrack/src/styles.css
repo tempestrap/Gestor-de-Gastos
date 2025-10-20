@@ -133,6 +133,12 @@ input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid
 .budget-card .budget-progress{height:8px;border-radius:8px;overflow:hidden;margin-top:8px}
 .budget-card .budget-progress > i{background:linear-gradient(90deg,var(--accent-b),var(--accent-c));height:100%;display:block}
 
+/* Stronger icon visuals */
+.icon-strong{filter:drop-shadow(0 8px 20px rgba(7,32,36,0.18));}
+.kpi-icon{width:64px;height:64}
+.mv-icon{width:56px;height:56}
+.brand-logo{box-shadow:0 18px 40px rgba(7,32,36,0.22);border:2px solid rgba(255,255,255,0.98)}
+
 /* micro-interactions */
 .budget-card{transition:transform .18s ease, box-shadow .18s ease, border-color .12s ease}
 .budget-card:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(10,20,30,0.08)}

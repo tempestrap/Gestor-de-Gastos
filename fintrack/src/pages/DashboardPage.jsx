@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
-import { fetchDashboard } from '../api'
+import { fetchDashboard, createMovement } from '../api'
 import KpiCard from '../components/KpiCard'
 import WalletPanel from '../components/WalletPanel'
 import Movements from '../components/Movements'
@@ -8,64 +8,148 @@ import StatsChart from '../components/StatsChart'
 import { useAuth } from "../AuthContext";
 import Logo from '../assets/logo.svg'
 
-
 export default function DashboardPage() {
   const [data, setData] = useState(null)
   const { user } = useAuth()
+  const [mvTitle, setMvTitle] = useState('')
+  const [mvAmount, setMvAmount] = useState('')
+  const [mvCategory, setMvCategory] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [mvError, setMvError] = useState(null)
+  const [mvSuccess, setMvSuccess] = useState(null)
 
   useEffect(() => {
+    let mounted = true
     if (user?.id) {
-      fetchDashboard(user.id).then(setData).catch(console.error)
+      fetchDashboard(user.id).then(d => { if (mounted) setData(d) }).catch(console.error);
     } else {
       setData(null)
     }
+    return () => { mounted = false }
   }, [user])
 
-
-  const wallets = [
-    // wallets are now driven by user data (budgets or custom wallets)
-  ]
- 
+  async function submitMovement(e){
+    e.preventDefault()
+    setMvError(null)
+    setMvSuccess(null)
+    if (!mvTitle || !mvAmount) return setMvError('Rellena descripción y monto')
+    // normalize possible comma or currency chars
+    const amount = Number(String(mvAmount).replace(/[^0-9.-]+/g, ''))
+    if (isNaN(amount)) return setMvError('Monto inválido')
+    setSaving(true)
+    try{
+      await createMovement({ userId: user.id, title: mvTitle, amount: amount, category: mvCategory })
+      const fresh = await fetchDashboard(user.id)
+      setData(fresh)
+      setMvTitle(''); setMvAmount(''); setMvCategory('')
+      setMvSuccess('Movimiento guardado')
+      // notify other pages to refresh data
+      try { window.dispatchEvent(new Event('dataUpdated')) } catch(e){}
+    }catch(err){
+      console.error('Create mv failed', err)
+      setMvError(err.message || 'Error al guardar movimiento')
+    }finally{ setSaving(false) }
+  }
 
   return (
     <div className="app">
       <Sidebar />
 
       <main>
-        <header className="topbar" style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <div style={{display:'flex',alignItems:'center',gap:14}}>
-            <img src={Logo} alt="Fintrack" style={{width:56,height:56}} />
-            <div>
-              <h1 style={{margin:0,fontSize:24,fontWeight:800}}>Bienvenido {user?.name ?? 'Usuario'}</h1>
-              <div className="muted">Resumen de tu actividad</div>
+        <div className="dashboard-container">
+          <header className="topbar">
+            <div className="brand-row">
+              <img src={Logo} alt="Fintrack" style={{width:56,height:56}} />
+              <div>
+                <h1>Bienvenido {user?.name ?? 'Usuario'}</h1>
+                <div className="subtitle">Resumen de tu actividad</div>
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <section className="dashboard-grid">
-          <div className="left">
-            <div className="kpi-row">
-              <KpiCard title="Ingresos" value={`$${data?.balances?.current ?? 0}`} />
-              <KpiCard title="Gastos" value={`$${(data?.balances?.current ?? 0) - (data?.balances?.available ?? 0)}`} />
-              <KpiCard title="Disponible" value={`$${data?.balances?.available ?? 0}`} small />
+          <section className="dashboard-grid">
+            <div className="left">
+              <div className="kpi-row">
+                {
+                  (() => {
+                    const movements = data?.recent || []
+                    // sum incomes and expenses from movements
+                    const incomesFromMov = movements.reduce((s,m)=> m.amount>0 ? s + Number(m.amount) : s, 0)
+                    const expensesFromMov = movements.reduce((s,m)=> m.amount<0 ? s + Math.abs(Number(m.amount)) : s, 0)
+                    // initial income from onboarding (incomeAmount or initialBudget)
+                    const initialIncome = Number(user?.onboarding?.incomeAmount ?? user?.onboarding?.initialBudget ?? 0)
+                    const totalIngresos = initialIncome + incomesFromMov
+                    const totalGastos = expensesFromMov
+                    const disponible = totalIngresos - totalGastos
+
+                    return (
+                      <>
+                        <KpiCard title="Ingresos" value={`$${totalIngresos}`} />
+                        <KpiCard title="Gastos" value={`$${totalGastos}`} />
+                        <KpiCard title="Disponible" value={`$${disponible}`} small />
+                      </>
+                    )
+                  })()
+                }
+              </div>
+
+              {/* Quick movement form placed under KPI cards for better visual hierarchy */}
+              <div className="card quick-mv">
+                <div className="card-header">
+                  <div className="card-title">Registrar movimiento rápido</div>
+                  <div className="actions" />
+                </div>
+                <form onSubmit={submitMovement} className="form-row form-quick">
+                  <input placeholder="Descripción" value={mvTitle} onChange={e=>setMvTitle(e.target.value)} />
+                  <input className="small" placeholder="Monto (negativo = gasto)" value={mvAmount} onChange={e=>setMvAmount(e.target.value)} />
+                  <input className="medium" placeholder="Categoría" value={mvCategory} onChange={e=>setMvCategory(e.target.value)} />
+                  <button className="btn" disabled={saving}>{saving? 'Guardando...' : 'Registrar'}</button>
+                </form>
+                {mvError && <div className="error" style={{marginTop:8}}>{mvError}</div>}
+                {mvSuccess && <div className="success" style={{marginTop:8}}>{mvSuccess}</div>}
+              </div>
+
+              <div className="card subtle">
+                <div className="card-header">
+                  <div className="card-title">Actividad</div>
+                </div>
+                {
+                  (() => {
+                    const recent = data?.recent || []
+                    if (data?.statistics?.monthly?.length) return <StatsChart monthly={data.statistics.monthly} />
+                    // aggregate by YYYY-MM
+                    const byMonth = {}
+                    recent.forEach(m => {
+                      const d = new Date(m.date)
+                      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`
+                      if (!byMonth[key]) byMonth[key] = { income:0, expenses:0, month: key }
+                      if (m.amount > 0) byMonth[key].income += Number(m.amount)
+                      else byMonth[key].expenses += Math.abs(Number(m.amount))
+                    })
+                    const monthly = Object.values(byMonth).sort((a,b)=> a.month.localeCompare(b.month))
+                    return <StatsChart monthly={monthly} />
+                  })()
+                }
+              </div>
+
+              <div className="card">
+                <div className="card-header">
+                  <div className="card-title">Movimientos recientes</div>
+                </div>
+                {data?.recent?.length ? <Movements items={data.recent} /> : <div className="empty-state">No hay movimientos todavía.</div>}
+              </div>
             </div>
 
-            <div className="card subtle">
-              <StatsChart monthly={data?.statistics?.monthly} />
-            </div>
-
-            <div className="card">
-              <h2 style={{marginTop:0}}>Movimientos recientes</h2>
-              {data?.recent?.length ? <Movements items={data.recent} /> : <div className="muted">No hay movimientos todavía.</div>}
-            </div>
-          </div>
-
-          <aside className="right">
-            <div className="card">
-              {data ? <WalletPanel balances={data.balances} wallets={data.budgets?.map(b=>({ category: b.category, amount: b.spent }))} /> : <div className="muted">Cargando cartera...</div>}
-            </div>
-          </aside>
-        </section>
+            <aside className="right">
+              <div className="card">
+                <div className="card-header">
+                  <div className="card-title">Cartera</div>
+                </div>
+                {data ? <WalletPanel balances={data.balances} wallets={data.budgets?.map(b=>({ category: b.category, amount: b.spent, limit: b.limit }))} /> : <div className="muted">Cargando cartera...</div>}
+              </div>
+            </aside>
+          </section>
+        </div>
       </main>
     </div>
   )

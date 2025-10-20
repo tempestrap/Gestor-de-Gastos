@@ -50,26 +50,22 @@
         "budgetsByCategory": [
           {
             "category": "Vivienda",
-            "limit": 1800,
-            "spent": 0
+            "limit": 1800
           },
           {
             "category": "Transporte",
-            "limit": 980,
-            "spent": 0
+            "limit": 980
           },
           {
             "category": "Comida",
-            "limit": 540,
-            "spent": 0
+            "limit": 540
           }
         ],
         "goals": [
           {
             "title": "Pecera",
             "targetAmount": 600,
-            "targetDate": "2025-11-19",
-            "savedAmount": 0
+            "targetDate": "2025-11-19"
           }
         ],
         "notifications": {
@@ -99,31 +95,26 @@
         "budgetsByCategory": [
           {
             "category": "Entretenimiento",
-            "limit": 130,
-            "spent": 0
+            "limit": 130
           },
           {
             "category": "Transporte",
-            "limit": 400,
-            "spent": 0
+            "limit": 400
           },
           {
             "category": "Compras",
-            "limit": 1000,
-            "spent": 0
+            "limit": 1000
           },
           {
             "category": "Comida",
-            "limit": 700,
-            "spent": 0
+            "limit": 700
           }
         ],
         "goals": [
           {
             "title": "PECERA",
             "targetAmount": 200,
-            "targetDate": "2025-12-04",
-            "savedAmount": 0
+            "targetDate": "2025-12-04"
           }
         ],
         "notifications": {
@@ -135,6 +126,13 @@
         },
         "initialBudget": 2400
       }
+    },
+    {
+      "id": 5,
+      "name": "AutoTestX",
+      "email": "autotestx@example.com",
+      "password": "test123",
+      "onboarding": null
     }
   ],
   "balances": {
@@ -143,15 +141,24 @@
       "available": 3000
     },
     "3": {
-      "current": 4200,
-      "available": 4200
+      "current": 6000,
+      "available": 6000
     },
     "4": {
       "current": 2400,
       "available": 2400
     }
   },
-  "movements": [],
+  "movements": [
+    {
+      "id": 1,
+      "ownerId": 3,
+      "title": "Renta",
+      "amount": 1800,
+      "category": "Vivienda",
+      "date": "2025-10-20T05:36:42.351Z"
+    }
+  ],
   "budgets": [
     {
       "id": 1,
@@ -171,7 +178,7 @@
       "id": 3,
       "category": "Vivienda",
       "limit": 1800,
-      "spent": 0,
+      "spent": 1800,
       "ownerId": 3
     },
     {

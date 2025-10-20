@@ -8,8 +8,17 @@ export default function WalletPage(){
   const [data, setData] = useState(null)
 
   useEffect(()=>{
-    if (user?.id) fetchDashboard(user.id).then(setData).catch(()=>{})
-    else setData(null)
+    let mounted = true
+    async function load(){
+      if (user?.id) {
+        const d = await fetchDashboard(user.id).catch(()=>null)
+        if (mounted) setData(d)
+      } else setData(null)
+    }
+    load()
+    const onData = ()=> load()
+    window.addEventListener('dataUpdated', onData)
+    return ()=>{ mounted = false; window.removeEventListener('dataUpdated', onData) }
   }, [user])
 
   return (

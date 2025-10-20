@@ -10,7 +10,17 @@ export default function BudgetsPage(){
   const [limit, setLimit] = useState('')
 
   useEffect(()=>{
-    if (user?.id) fetchBudgets(user.id).then(setItems).catch(()=>{})
+    let mounted = true
+    async function load(){
+      if (user?.id) {
+        const d = await fetchBudgets(user.id).catch(()=>[])
+        if (mounted) setItems(d)
+      }
+    }
+    load()
+    const onData = ()=> load()
+    window.addEventListener('dataUpdated', onData)
+    return ()=>{ mounted = false; window.removeEventListener('dataUpdated', onData) }
   }, [user])
 
   async function onAdd(e){

@@ -12,7 +12,8 @@ import { useAuth } from './AuthContext'
 function Protected({ children }) {
   const { user } = useAuth()
   if (!user) return <Navigate to="/login" replace />
-  if (user.onboarding === false) return <Navigate to="/onboarding" replace />
+  // if onboarding missing (null/undefined) redirect to onboarding
+  if (!user.onboarding) return <Navigate to="/onboarding" replace />
   return children
 }
 

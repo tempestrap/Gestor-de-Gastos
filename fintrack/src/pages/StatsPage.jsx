@@ -7,8 +7,17 @@ export default function StatsPage(){
   const [stats, setStats] = useState(null)
   const { user } = useAuth()
   useEffect(()=>{
-    if (user?.id) fetchStats(user.id).then(d=>setStats(d.stats)).catch(()=>{})
-    else setStats(null)
+    let mounted = true
+    async function load(){
+      if (user?.id) {
+        const d = await fetchStats(user.id).catch(()=>({}))
+        if (mounted) setStats(d.stats)
+      } else setStats(null)
+    }
+    load()
+    const onData = ()=> load()
+    window.addEventListener('dataUpdated', onData)
+    return ()=>{ mounted = false; window.removeEventListener('dataUpdated', onData) }
   }, [user])
 
   return (

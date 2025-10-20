@@ -162,5 +162,36 @@ app.post('/auth/onboarding', (req, res) => {
   res.json({ user: safeUser, budgets: db.budgets, goals: db.goals });
 });
 
+// Create a movement (expense or income)
+app.post('/data/movements', (req, res) => {
+  const { userId, title, amount, category, date } = req.body;
+  if (!userId || typeof amount !== 'number' || !title) return res.status(400).json({ message: 'Missing fields' });
+  const db = readDB();
+  const id = db.movements.length ? Math.max(...db.movements.map(m => m.id)) + 1 : 1;
+  const mv = { id, ownerId: userId, title, amount, category: category || 'Otros', date: date || new Date().toISOString() };
+  db.movements.push(mv);
+
+  // update balances for the user
+  if (!db.balances) db.balances = {};
+  if (!db.balances[userId]) db.balances[userId] = { current: 0, available: 0 };
+  // if amount is negative -> expense
+  if (amount < 0) {
+    db.balances[userId].current = (db.balances[userId].current || 0) + amount;
+    db.balances[userId].available = (db.balances[userId].available || 0) + amount;
+  } else {
+    db.balances[userId].current = (db.balances[userId].current || 0) + amount;
+    db.balances[userId].available = (db.balances[userId].available || 0) + amount;
+  }
+
+  // If there's a budget for this category for the user, increase spent
+  const budget = (db.budgets || []).find(b => b.ownerId === userId && b.category === category);
+  if (budget) {
+    budget.spent = (budget.spent || 0) + Math.abs(amount);
+  }
+
+  writeDB(db);
+  res.json(mv);
+});
+
 const PORT = 4000;
 app.listen(PORT, () => console.log(`Mock API listening on http://localhost:${PORT}`));

@@ -14,9 +14,16 @@ export function AuthProvider({ children }){
   }, [user])
 
   async function login(email, password){
-    const data = await apiLogin(email, password)
-    setUser({ ...data.user, token: data.token })
-    return data
+    try {
+      const data = await apiLogin(email, password)
+      setUser({ ...data.user, token: data.token })
+      return data
+    } catch (err) {
+      console.error('Auth login error', err)
+      // Normalize error so UI can display a message
+      const msg = err?.response?.data?.message || err?.message || 'Error al iniciar sesión'
+      throw new Error(msg)
+    }
   }
 
   function logout(){

@@ -18,7 +18,7 @@
 
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;background:linear-gradient(180deg,var(--bg),#f7f8fb);color:var(--text);font-family:Inter, system-ui, Arial, sans-serif;-webkit-font-smoothing:antialiased}
+.page, body{margin:0;background:linear-gradient(180deg,var(--bg),#f7f8fb);color:var(--text);font-family:Inter, system-ui, Arial, sans-serif;-webkit-font-smoothing:antialiased}
 .app{display:flex;min-height:100vh}
 
 /* SIDEBAR */
@@ -36,7 +36,19 @@ body{margin:0;background:linear-gradient(180deg,var(--bg),#f7f8fb);color:var(--t
 .topbar{padding:18px 0}
 main{flex:1;padding:28px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.dashboard-container{max-width:1200px;margin:0 auto}
+.topbar{padding:18px 0 28px}
+.topbar .brand-row{display:flex;align-items:center;gap:14px}
+.topbar h1{font-size:26px;margin:0}
+.topbar .subtitle{color:var(--muted);font-size:13px}
 .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow-1)}
+.card{transition:transform .18s ease, box-shadow .18s ease}
+.card:hover{transform:translateY(-6px);box-shadow:0 14px 40px rgba(16,24,40,0.12)}
+
+.card .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.card .card-title{font-size:16px;font-weight:700}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;color:var(--muted)}
+
 .card.subtle{box-shadow:var(--shadow-2)}
 .card.full{grid-column:span 2}
 .center{display:flex;align-items:center;justify-content:center}
@@ -44,7 +56,17 @@ main{flex:1;padding:28px}
 /* Buttons & inputs */
 .btn{background:linear-gradient(90deg,var(--accent-c),#f79e02);border:none;padding:10px 14px;border-radius:12px;color:#071422;cursor:pointer;font-weight:600}
 .btn.ghost{background:transparent;border:1px solid rgba(10,20,30,0.06);color:var(--muted)}
+ .btn{transition:transform .12s ease, box-shadow .12s ease}
+ .btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
+/* focus and accessibility */
+input:focus, select:focus, textarea:focus, .btn:focus{outline:3px solid rgba(203,180,255,0.28);outline-offset:2px}
+input:focus{box-shadow:0 6px 18px rgba(139,92,246,0.06)}
+
+/* subtle entrance animation */
+@keyframes popIn { from { opacity:0; transform: translateY(8px) scale(.995) } to { opacity:1; transform:none } }
+.card, .auth-card, .kpi-card{animation: popIn .18s ease both}
 input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,36,0.06);background:var(--card);color:var(--text)}
+.input-hint{font-size:12px;color:var(--muted);margin-top:6px}
 
 .label{display:block;margin:8px 0;color:var(--muted)}
 .error{color:#b00020;margin-bottom:8px}
@@ -61,18 +83,59 @@ input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid
 .dashboard-grid{display:flex;gap:22px}
 .left{flex:1}
 .right{width:360px}
-.kpi-row{display:flex;gap:18px;margin-bottom:14px}
-.kpi-card{background:linear-gradient(135deg,var(--accent-a),var(--accent-b));padding:14px;border-radius:12px;flex:1;color:#072024}
+.kpi-row{display:flex;gap:18px;margin-bottom:12px;align-items:stretch}
+.kpi-card{background:linear-gradient(135deg,var(--accent-a),var(--accent-b));padding:18px 16px;border-radius:12px;flex:1;color:#072024;min-height:84px}
+.kpi-card .kpi-value{font-size:20px}
+.kpi-card{min-height:72px}
 .kpi-card.small{max-width:200px}
 .kpi-title{color:rgba(7,32,36,0.7);font-size:13px}
 .kpi-value{font-size:22px;font-weight:800}
 .wallet-panel{position:sticky;top:22px}
+.wallet-balance{display:flex;flex-direction:column;gap:4px}
+.wallet-balance .big{font-size:22px;font-weight:800}
 .movements ul{list-style:none;padding:0;margin:0}
-.movements li{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(10,20,30,0.04)}
+.movements li{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(10,20,30,0.04);align-items:center}
+.movements .mv-left{display:flex;align-items:center;gap:12px}
+.movements .mv-left .mv-icon{width:44px;height:44;border-radius:10;display:grid;place-items:center}
+.movements .mv-right{min-width:80px;text-align:right}
+
+.form-row{display:flex;gap:12px;align-items:center}
+.form-row input{padding:12px 14px}
+.form-row .small{width:140px}
+.form-row .medium{width:200px}
+
+/* quick movement card specific tweaks */
+.quick-mv{margin-top:6px;padding:14px;border-radius:12px}
+.form-quick{display:flex;gap:12px;align-items:center}
+.form-quick input{background:linear-gradient(180deg,var(--card),#fbfbff);border:1px solid rgba(15,23,36,0.04);box-shadow:0 6px 18px rgba(10,20,40,0.04);padding:12px 14px;border-radius:10px}
+.form-quick .small{width:160px}
+.form-quick .medium{width:220px}
+.form-quick .btn{padding:10px 16px;border-radius:10px}
+
+/* ensure the quick form looks good on narrow screens */
+@media (max-width:880px){
+  .form-quick{flex-direction:column;align-items:stretch}
+  .form-quick .small, .form-quick .medium{width:100%}
+  .kpi-row{flex-direction:column}
+}
+
+.card .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.card .card-header .actions{display:flex;gap:8px}
+
+.budget-progress{height:8px;background:linear-gradient(90deg,#f1f5f9,#f1f5f9);border-radius:8px;overflow:hidden}
+.budget-progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-b),var(--accent-c));width:0%}
 .movements li.expense .mv-right{color:#d94600}
 .movements li.income .mv-right{color:#0b69ff}
 .mv-left{display:flex;flex-direction:column}
 .mv-cat{font-size:12px;color:var(--muted)}
+.mv-right{font-weight:700}
+
+/* small responsive tweaks */
+@media (max-width:880px){
+  .sidebar{display:none}
+  .app{flex-direction:column}
+  .right{width:100%}
+}
 .stats-chart{margin-bottom:12px}
 
 /* Utility */

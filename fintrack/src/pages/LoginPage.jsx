@@ -16,7 +16,8 @@ export default function LoginPage(){
       await login(email, password)
       nav('/')
     }catch(err){
-      setError(err.response?.data?.message || 'Error')
+      // err may be an Error thrown by AuthContext
+      setError(err.message || err.response?.data?.message || 'Error al iniciar sesión')
     }
   }
 
@@ -33,10 +34,10 @@ export default function LoginPage(){
 
         {error && <div className="error">{error}</div>}
         <label className="label">Correo electrónico
-          <input value={email} onChange={e=>setEmail(e.target.value)} />
+          <input placeholder="tu@correo.com" value={email} onChange={e=>setEmail(e.target.value)} />
         </label>
         <label className="label">Contraseña
-          <input type="password" value={password} onChange={e=>setPassword(e.target.value)} />
+          <input placeholder="Contraseña" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
         </label>
         <div className="row" style={{marginTop:8}}>
           <button className="btn">Entrar</button>

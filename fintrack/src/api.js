@@ -37,3 +37,16 @@ export async function createBudget(b){
   const res = await API.post('/data/budgets', b)
   return res.data
 }
+
+export async function createMovement(payload){
+  try {
+    // Ensure amount is numeric when sending
+    const body = { ...payload, amount: typeof payload.amount === 'number' ? payload.amount : Number(String(payload.amount).replace(/[^0-9.-]+/g, '')) }
+    const res = await API.post('/data/movements', body)
+    return res.data
+  } catch (err) {
+    console.error('createMovement error', err)
+    const msg = err?.response?.data?.message || err?.message || 'Error creating movement'
+    throw new Error(msg)
+  }
+}

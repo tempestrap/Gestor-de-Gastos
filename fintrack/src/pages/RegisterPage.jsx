@@ -29,6 +29,10 @@ export default function RegisterPage() {
         await login(email, password)
       } catch (e) {
         console.warn('Auto-login failed', e)
+        // show a hint to the user
+        setError('Cuenta creada, pero no se pudo iniciar sesión automáticamente. Intenta iniciar sesión manualmente.')
+        setSuccess(null)
+        return
       }
 
       // Redirige al onboarding
@@ -54,13 +58,13 @@ export default function RegisterPage() {
         {success && <div className="success">{success}</div>}
 
         <label className="label">Nombre completo
-          <input value={name} onChange={e => setName(e.target.value)} />
+          <input placeholder="Tu nombre completo" value={name} onChange={e => setName(e.target.value)} />
         </label>
         <label className="label">Correo electrónico
-          <input value={email} onChange={e => setEmail(e.target.value)} />
+          <input placeholder="tu@correo.com" value={email} onChange={e => setEmail(e.target.value)} />
         </label>
         <label className="label">Contraseña
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+          <input placeholder="Mínimo 6 caracteres" type="password" value={password} onChange={e => setPassword(e.target.value)} />
         </label>
 
         <div className="row" style={{ marginTop: 8 }}>

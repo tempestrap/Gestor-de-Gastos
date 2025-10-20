@@ -6,9 +6,9 @@ export default function WalletPanel({ balances, wallets }){
     <aside className="wallet-panel card">
       <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:12}}>
         <img src={Logo} alt="Fintrack" style={{width:48,height:48,borderRadius:10}} />
-        <div>
+        <div className="wallet-balance">
           <div className="muted" style={{fontSize:12}}>Saldo actual</div>
-          <div style={{fontSize:20,fontWeight:800}}>${balances?.current ?? 0}</div>
+          <div className="big">${balances?.current ?? 0}</div>
         </div>
       </div>
 
@@ -19,18 +19,23 @@ export default function WalletPanel({ balances, wallets }){
 
       <hr style={{border:'none',height:1,background:'rgba(10,20,30,0.04)',margin:'12px 0'}}/>
 
-      <div style={{fontSize:14,fontWeight:700,marginBottom:8}}>Carteras</div>
-      <div style={{display:'grid',gap:8}}>
+      <div style={{fontSize:14,fontWeight:700,marginBottom:8}}>Presupuestos</div>
+      <div style={{display:'grid',gap:12}}>
         {wallets && wallets.length ? wallets.map((w,i)=> (
-          <div key={i} style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-            <div style={{display:'flex',alignItems:'center',gap:8}}>
-              <div style={{width:36,height:36,borderRadius:8,background:'linear-gradient(90deg,var(--accent-a),var(--accent-b))',display:'grid',placeItems:'center',color:'#072024',fontWeight:800}}>{w.category?.charAt(0)}</div>
-              <div>{w.category}</div>
+          <div key={i}>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <div style={{display:'flex',alignItems:'center',gap:8}}>
+                <div style={{width:36,height:36,borderRadius:8,background:'linear-gradient(90deg,var(--accent-a),var(--accent-b))',display:'grid',placeItems:'center',color:'#072024',fontWeight:800}}>{w.category?.charAt(0)}</div>
+                <div>{w.category}</div>
+              </div>
+              <div style={{fontWeight:700}}>${w.amount}</div>
             </div>
-            <div style={{fontWeight:700}}>${w.amount}</div>
+            <div className="budget-progress" style={{marginTop:8}}>
+              <i style={{width: `${Math.min(100, (w.amount / ( (w.limit||1) )) * 100)}%`}}></i>
+            </div>
           </div>
         )) : (
-          <div className="muted">Sin carteras definidas. Crea una desde Presupuestos.</div>
+          <div className="muted">Sin presupuestos definidos. Crea uno desde Presupuestos.</div>
         )}
       </div>
     </aside>

@@ -133,6 +133,79 @@
       "email": "autotestx@example.com",
       "password": "test123",
       "onboarding": null
+    },
+    {
+      "id": 6,
+      "name": "Marcos Fernando",
+      "email": "marquitosfer099@gmail.com",
+      "password": "AAaa1100",
+      "onboarding": {
+        "frequentCategories": [
+          "Salud",
+          "Inversión",
+          "Préstamos",
+          "Ropa",
+          "Pagos",
+          "Educación",
+          "Vacaciones"
+        ],
+        "incomeSource": "TRABAJO",
+        "incomeAmount": 25000,
+        "incomeDate": "2025-12-01",
+        "initialBudget": 25000,
+        "budgetsByCategory": [
+          {
+            "category": "Salud",
+            "limit": 2000,
+            "spent": 0
+          },
+          {
+            "category": "Inversión",
+            "limit": 1500,
+            "spent": 0
+          },
+          {
+            "category": "Préstamos",
+            "limit": 3000,
+            "spent": 0
+          },
+          {
+            "category": "Ropa",
+            "limit": 900,
+            "spent": 0
+          },
+          {
+            "category": "Pagos",
+            "limit": 3500,
+            "spent": 0
+          },
+          {
+            "category": "Educación",
+            "limit": 8000,
+            "spent": 0
+          },
+          {
+            "category": "Vacaciones",
+            "limit": 35000,
+            "spent": 0
+          }
+        ],
+        "goals": [
+          {
+            "title": "VACACIONES",
+            "targetAmount": 75000,
+            "targetDate": "2025-12-25",
+            "savedAmount": 0
+          }
+        ],
+        "notifications": {
+          "email": true,
+          "push": false,
+          "thresholds": {
+            "budgetPercent": 80
+          }
+        }
+      }
     }
   ],
   "balances": {
@@ -145,8 +218,12 @@
       "available": 3930
     },
     "4": {
-      "current": 2400,
-      "available": 2400
+      "current": 1900,
+      "available": 1900
+    },
+    "6": {
+      "current": 48400,
+      "available": 48400
     }
   },
   "movements": [
@@ -181,6 +258,38 @@
       "amount": -250,
       "category": "entretenimiento",
       "date": "2025-10-20T19:13:43.955Z"
+    },
+    {
+      "id": 5,
+      "ownerId": 4,
+      "title": "PAGO",
+      "amount": -500,
+      "category": "Compras",
+      "date": "2025-10-24T02:07:51.545Z"
+    },
+    {
+      "id": 6,
+      "ownerId": 6,
+      "title": "Ropita",
+      "amount": -1000,
+      "category": "Ropa",
+      "date": "2025-10-24T02:11:10.335Z"
+    },
+    {
+      "id": 7,
+      "ownerId": 6,
+      "title": "Curacion",
+      "amount": -600,
+      "category": "Salud",
+      "date": "2025-10-24T02:11:35.794Z"
+    },
+    {
+      "id": 8,
+      "ownerId": 6,
+      "title": "Quincena",
+      "amount": 25000,
+      "category": "TRABAJO",
+      "date": "2025-10-24T02:12:15.186Z"
     }
   ],
   "budgets": [
@@ -237,7 +346,7 @@
       "id": 8,
       "category": "Compras",
       "limit": 1000,
-      "spent": 0,
+      "spent": 500,
       "ownerId": 4
     },
     {
@@ -260,6 +369,55 @@
       "spent": 0,
       "ownerId": 3,
       "id": 11
+    },
+    {
+      "id": 12,
+      "category": "Salud",
+      "limit": 2000,
+      "spent": 600,
+      "ownerId": 6
+    },
+    {
+      "id": 13,
+      "category": "Inversión",
+      "limit": 1500,
+      "spent": 0,
+      "ownerId": 6
+    },
+    {
+      "id": 14,
+      "category": "Préstamos",
+      "limit": 3000,
+      "spent": 0,
+      "ownerId": 6
+    },
+    {
+      "id": 15,
+      "category": "Ropa",
+      "limit": 900,
+      "spent": 1000,
+      "ownerId": 6
+    },
+    {
+      "id": 16,
+      "category": "Pagos",
+      "limit": 3500,
+      "spent": 0,
+      "ownerId": 6
+    },
+    {
+      "id": 17,
+      "category": "Educación",
+      "limit": 8000,
+      "spent": 0,
+      "ownerId": 6
+    },
+    {
+      "id": 18,
+      "category": "Vacaciones",
+      "limit": 35000,
+      "spent": 0,
+      "ownerId": 6
     }
   ],
   "goals": [
@@ -286,6 +444,14 @@
       "targetDate": "2025-12-04",
       "savedAmount": 0,
       "ownerId": 4
+    },
+    {
+      "id": 4,
+      "title": "VACACIONES",
+      "targetAmount": 75000,
+      "targetDate": "2025-12-25",
+      "savedAmount": 0,
+      "ownerId": 6
     }
   ],
   "statistics": {}

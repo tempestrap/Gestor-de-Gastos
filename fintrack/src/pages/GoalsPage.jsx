@@ -3,6 +3,8 @@ import Sidebar from '../components/Sidebar'
 import { useAuth } from '../AuthContext'
 import { fetchGoals, createGoal, updateGoal } from '../api'
 import Logo from '../assets/logo.svg'
+import GoalPredictionCard from '../components/GoalPredictionCard'
+import SavingsCalculator from '../components/SavingsCalculator'
 
 function GoalCard({ g }){
   const saved = Number(g.savedAmount || 0)
@@ -160,14 +162,20 @@ export default function GoalsPage(){
                     <i style={{width:`${totalPct}%`}}></i>
                   </div>
                   <hr style={{border:'none',height:1,background:'rgba(10,20,30,0.04)',margin:'12px 0'}}/>
-                  <div className="muted">Comparativas</div>
-                  <div style={{marginTop:8,fontSize:13}}>
-                    {totals.target ? (
-                      <div>Has alcanzado <strong>{totalPct}%</strong> de tu objetivo total.</div>
-                    ) : (
-                      <div>No hay objetivos definidos.</div>
-                    )}
-                  </div>
+                  
+                  <div className="muted" style={{marginBottom:8}}>Análisis Inteligente</div>
+                  {goals?.map(g => (
+                    <GoalPredictionCard key={g.id} goal={g} />
+                  ))}
+                </div>
+              </div>
+
+              <div className="card" style={{marginTop:16}}>
+                <div className="card-header">
+                  <div className="card-title">Calculadora de ahorro</div>
+                </div>
+                <div style={{padding:16}}>
+                  <SavingsCalculator />
                 </div>
               </div>
             </aside>

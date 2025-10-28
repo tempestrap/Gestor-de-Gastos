@@ -49,6 +49,11 @@ export async function updateGoal(id, body){
   return res.data
 }
 
+export async function getGoalPrediction(goalId){
+  const res = await API.get(`/data/goals/${goalId}/predict`)
+  return res.data
+}
+
 export async function createBudget(b){
   const res = await API.post('/data/budgets', b)
   return res.data

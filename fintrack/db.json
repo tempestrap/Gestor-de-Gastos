@@ -222,8 +222,8 @@
       "available": 1900
     },
     "6": {
-      "current": 48400,
-      "available": 48400
+      "current": 58400,
+      "available": 58400
     }
   },
   "movements": [
@@ -290,6 +290,22 @@
       "amount": 25000,
       "category": "TRABAJO",
       "date": "2025-10-24T02:12:15.186Z"
+    },
+    {
+      "id": 9,
+      "ownerId": 6,
+      "title": "Invertir",
+      "amount": -8000,
+      "category": "Inversión",
+      "date": "2025-10-28T06:05:14.031Z"
+    },
+    {
+      "id": 10,
+      "ownerId": 6,
+      "title": "Retirar",
+      "amount": 18000,
+      "category": "Inversión",
+      "date": "2025-10-28T06:05:35.137Z"
     }
   ],
   "budgets": [
@@ -381,7 +397,7 @@
       "id": 13,
       "category": "Inversión",
       "limit": 1500,
-      "spent": 0,
+      "spent": 26000,
       "ownerId": 6
     },
     {

@@ -185,7 +185,11 @@ app.post('/data/movements', (req, res) => {
 
   // If there's a budget for this category for the user, increase spent
   const budget = (db.budgets || []).find(b => b.ownerId === userId && b.category === category);
-  if (budget) {
+  // Only increase budget.spent when the movement is an expense (amount < 0).
+  // Previously the code used Math.abs(amount) regardless of sign, which made
+  // incomes incorrectly increase the budget's spent total. This change makes
+  // budgets reflect only expenses.
+  if (budget && amount < 0) {
     budget.spent = (budget.spent || 0) + Math.abs(amount);
   }
 

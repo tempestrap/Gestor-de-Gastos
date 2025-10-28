@@ -44,7 +44,11 @@ export default function DashboardPage() {
   if (mvType === 'ingreso' && amount < 0) amount = Math.abs(amount)
     setSaving(true)
     try{
-      await createMovement({ userId: user.id, title: mvTitle, amount: amount, category: mvCategory })
+      // Build payload: do NOT include category for ingresos to avoid any
+      // accidental budget updates on older servers or data inconsistencies.
+      const payload = { userId: user.id, title: mvTitle, amount }
+      if (mvType === 'gasto' && mvCategory) payload.category = mvCategory
+      await createMovement(payload)
       const fresh = await fetchDashboard(user.id)
       setData(fresh)
       setMvTitle(''); setMvAmount(''); setMvCategory('')
@@ -56,6 +60,8 @@ export default function DashboardPage() {
       setMvError(err.message || 'Error al guardar movimiento')
     }finally{ setSaving(false) }
   }
+
+  
 
   return (
     <div className="app">

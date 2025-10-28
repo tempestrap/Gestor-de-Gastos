@@ -218,8 +218,8 @@
       "available": 3930
     },
     "4": {
-      "current": 1900,
-      "available": 1900
+      "current": 6960,
+      "available": 6960
     },
     "6": {
       "current": 58400,
@@ -306,6 +306,38 @@
       "amount": 18000,
       "category": "Inversión",
       "date": "2025-10-28T06:05:35.137Z"
+    },
+    {
+      "id": 11,
+      "ownerId": 4,
+      "title": "nose",
+      "amount": 1500,
+      "category": "Compras",
+      "date": "2025-10-28T06:42:02.986Z"
+    },
+    {
+      "id": 12,
+      "ownerId": 4,
+      "title": "MAMA",
+      "amount": 3500,
+      "category": "Compras",
+      "date": "2025-10-28T06:45:10.514Z"
+    },
+    {
+      "id": 13,
+      "ownerId": 4,
+      "title": "Semana",
+      "amount": 100,
+      "category": "Otros",
+      "date": "2025-10-28T07:02:34.535Z"
+    },
+    {
+      "id": 14,
+      "ownerId": 4,
+      "title": "colectivo",
+      "amount": -40,
+      "category": "Transporte",
+      "date": "2025-10-28T07:02:53.260Z"
     }
   ],
   "budgets": [
@@ -355,14 +387,14 @@
       "id": 7,
       "category": "Transporte",
       "limit": 400,
-      "spent": 0,
+      "spent": 40,
       "ownerId": 4
     },
     {
       "id": 8,
       "category": "Compras",
       "limit": 1000,
-      "spent": 500,
+      "spent": 5500,
       "ownerId": 4
     },
     {

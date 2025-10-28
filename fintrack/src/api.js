@@ -33,6 +33,22 @@ export async function fetchBudgets(userId){
   return res.data
 }
 
+// Convenience helper to fetch goals (the mock server returns goals inside /data/dashboard)
+export async function fetchGoals(userId){
+  const res = await API.get('/data/goals', { params: userId ? { userId } : {} })
+  return res.data || []
+}
+
+export async function createGoal(goal){
+  const res = await API.post('/data/goals', goal)
+  return res.data
+}
+
+export async function updateGoal(id, body){
+  const res = await API.put(`/data/goals/${id}`, body)
+  return res.data
+}
+
 export async function createBudget(b){
   const res = await API.post('/data/budgets', b)
   return res.data

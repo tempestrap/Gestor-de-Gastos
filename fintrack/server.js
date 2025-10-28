@@ -193,5 +193,38 @@ app.post('/data/movements', (req, res) => {
   res.json(mv);
 });
 
+// Goals endpoints: list, create, update
+app.get('/data/goals', (req, res) => {
+  const db = readDB();
+  const userId = req.query.userId ? Number(req.query.userId) : null;
+  const goals = userId ? db.goals.filter(g => g.ownerId === userId) : db.goals;
+  res.json(goals);
+});
+
+app.post('/data/goals', (req, res) => {
+  const { ownerId, title, targetAmount, targetDate, savedAmount } = req.body;
+  if (!ownerId || !title) return res.status(400).json({ message: 'Missing fields' });
+  const db = readDB();
+  const id = db.goals.length ? Math.max(...db.goals.map(g => g.id)) + 1 : 1;
+  const g = { id, ownerId, title, targetAmount: Number(targetAmount || 0), targetDate: targetDate || null, savedAmount: Number(savedAmount || 0) };
+  db.goals.push(g);
+  writeDB(db);
+  res.json(g);
+});
+
+app.put('/data/goals/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const db = readDB();
+  const goal = (db.goals || []).find(g => g.id === id);
+  if (!goal) return res.status(404).json({ message: 'Goal not found' });
+  const { title, targetAmount, targetDate, savedAmount } = req.body;
+  if (title !== undefined) goal.title = title;
+  if (targetAmount !== undefined) goal.targetAmount = Number(targetAmount || 0);
+  if (targetDate !== undefined) goal.targetDate = targetDate;
+  if (savedAmount !== undefined) goal.savedAmount = Number(savedAmount || 0);
+  writeDB(db);
+  res.json(goal);
+});
+
 const PORT = 4000;
 app.listen(PORT, () => console.log(`Mock API listening on http://localhost:${PORT}`));

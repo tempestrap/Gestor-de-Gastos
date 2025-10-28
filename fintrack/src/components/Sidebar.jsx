@@ -5,6 +5,7 @@ import Logo from '../assets/logo.svg'
 import { AiOutlineHome, AiOutlineWallet } from 'react-icons/ai'
 import { FiBarChart2 } from 'react-icons/fi'
 import { RiFolder3Line } from 'react-icons/ri'
+import { GiBullseye } from 'react-icons/gi'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 
@@ -31,6 +32,9 @@ export default function Sidebar(){
         </NavLink>
         <NavLink to="/budgets" className={({isActive})=> isActive? 'active':''}>
           <Tippy content="Presupuestos"><span style={{display:'inline-flex',alignItems:'center'}}><RiFolder3Line className="icon-strong" style={{verticalAlign:'middle',marginRight:10}} size={20}/> Presupuestos</span></Tippy>
+        </NavLink>
+        <NavLink to="/goals" className={({isActive})=> isActive? 'active':''}>
+          <Tippy content="Metas"><span style={{display:'inline-flex',alignItems:'center'}}><GiBullseye className="icon-strong" style={{verticalAlign:'middle',marginRight:10}} size={20}/> Metas</span></Tippy>
         </NavLink>
         <NavLink to="/stats" className={({isActive})=> isActive? 'active':''}>
           <Tippy content="Estadísticas"><span style={{display:'inline-flex',alignItems:'center'}}><FiBarChart2 className="icon-strong" style={{verticalAlign:'middle',marginRight:10}} size={20}/> Estadísticas</span></Tippy>

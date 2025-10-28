@@ -7,6 +7,7 @@ export default function RegisterPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
   const nav = useNavigate()
@@ -17,7 +18,13 @@ export default function RegisterPage() {
     setError(null)
     setSuccess(null)
 
-    if (!name || !email || !password) return setError('Rellena todos los campos')
+    if (!name || !email || !password || !confirmPassword) {
+      return setError('Rellena todos los campos')
+    }
+
+    if (password !== confirmPassword) {
+      return setError('Las contraseñas no coinciden')
+    }
 
     try {
       const user = await register(name, email, password)
@@ -63,7 +70,7 @@ export default function RegisterPage() {
           padding: '40px'
         }}>
           <img 
-            src="/src/assets/login-image.png" 
+            src="/src/assets/register-image.png" 
             alt="Financial planning" 
             style={{
               width: '100%',
@@ -224,6 +231,35 @@ export default function RegisterPage() {
               />
             </div>
 
+            <div style={{ marginBottom: '18px' }}>
+              <label style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#333',
+                marginBottom: '8px'
+              }}>Contraseña</label>
+              <input
+                type="password"
+                placeholder="Mínimo 6 caracteres"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '14px 16px',
+                  fontSize: '15px',
+                  border: '1px solid #ddd',
+                  borderRadius: '8px',
+                  outline: 'none',
+                  transition: 'all 0.2s',
+                  fontFamily: 'inherit',
+                  boxSizing: 'border-box'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#d4af37'}
+                onBlur={(e) => e.target.style.borderColor = '#ddd'}
+              />
+            </div>
+
             <div style={{ marginBottom: '24px' }}>
               <label style={{
                 display: 'block',
@@ -231,12 +267,12 @@ export default function RegisterPage() {
                 fontWeight: '600',
                 color: '#333',
                 marginBottom: '8px'
-              }}>Password</label>
+              }}>Confirmar contraseña</label>
               <input
                 type="password"
-                placeholder="Mínimo 6 caracteres"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
+                placeholder="Confirma tu contraseña"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
                 style={{
                   width: '100%',
                   padding: '14px 16px',

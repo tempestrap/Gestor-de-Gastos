@@ -140,7 +140,7 @@ export default function LoginPage(){
               }}>Email</label>
               <input
                 type="email"
-                placeholder="Value"
+                placeholder="tu@correo.com"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 style={{
@@ -166,10 +166,10 @@ export default function LoginPage(){
                 fontWeight: '600',
                 color: '#333',
                 marginBottom: '8px'
-              }}>Password</label>
+              }}>Contraseña</label>
               <input
                 type="password"
-                placeholder="Value"
+                placeholder="Minimo 6 caracteres"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 style={{
@@ -246,7 +246,7 @@ export default function LoginPage(){
               onMouseOver={(e) => e.target.style.color = '#d4af37'}
               onMouseOut={(e) => e.target.style.color = '#666'}
               >
-                Forgot password?
+                Olvidaste la contraseña?
               </a>
             </div>
 

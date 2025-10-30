@@ -12,6 +12,7 @@ export default function OnboardingPage() {
     incomeSource: '',
     incomeAmount: 0,
     incomeDate: '',
+    incomeFrequency: 'mensual',
     initialBudget: 0,
     budgetsByCategory: [],
     goals: [],
@@ -242,7 +243,7 @@ async function finish() {
                   marginBottom: '10px',
                   fontSize: '16px'
                 }}>
-                  Monto aproximado mensual
+                  Monto 
                 </label>
                 <input
                   type="number"
@@ -262,6 +263,38 @@ async function finish() {
                 />
               </div>
 
+              <div style={{ marginBottom: '25px' }}>
+                <label style={{
+                  display: 'block',
+                  color: 'black',
+                  fontWeight: '600',
+                  marginBottom: '10px',
+                  fontSize: '16px'
+                }}>
+                  Frecuencia de ingreso
+                </label>
+                <select
+                  value={data.incomeFrequency}
+                  onChange={e => setData({ ...data, incomeFrequency: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '14px',
+                    borderRadius: '10px',
+                    border: '2px solid rgba(255,255,255,0.3)',
+                    background: 'rgba(255,255,255,0.9)',
+                    fontSize: '16px',
+                    outline: 'none',
+                    boxSizing: 'border-box',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <option value="diario">Diario</option>
+                  <option value="semanal">Semanal</option>
+                  <option value="quincenal">Quincenal</option>
+                  <option value="mensual">Mensual</option>
+                </select>
+              </div>
+
               <div>
                 <label style={{
                   display: 'block',
@@ -270,7 +303,7 @@ async function finish() {
                   marginBottom: '10px',
                   fontSize: '16px'
                 }}>
-                  Fecha de ingreso recurrente
+                  Fecha de próximo ingreso
                 </label>
                 <input
                   type="date"

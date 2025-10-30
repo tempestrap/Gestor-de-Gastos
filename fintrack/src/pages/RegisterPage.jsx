@@ -70,7 +70,7 @@ export default function RegisterPage() {
           padding: '40px'
         }}>
           <img 
-            src="/src/assets/register-image.png" 
+            src="/src/assets/login-image.png" 
             alt="Financial planning" 
             style={{
               width: '100%',

@@ -13,11 +13,25 @@ export default function OnboardingPage() {
     incomeAmount: 0,
     incomeDate: '',
     incomeFrequency: 'mensual',
+    savingsAmount: 0,
+    savingsPercent: 0,
+    goalAllocations: [],
     initialBudget: 0,
     budgetsByCategory: [],
     goals: [],
     notifications: { email: true, push: false, thresholds: { budgetPercent: 80 } }
   })
+
+  // Función para obtener texto de frecuencia
+  function getFrequencyText() {
+    const texts = {
+      diario: 'diario',
+      semanal: 'semanal',
+      quincenal: 'quincenal',
+      mensual: 'mensual'
+    }
+    return texts[data.incomeFrequency] || 'mensual'
+  }
 
   const categories = [
     { name: 'Alimentación', icon: '🍽️' },
@@ -46,20 +60,17 @@ export default function OnboardingPage() {
     })
   }
 
-async function finish() {
+  async function finish() {
     try{
       const res = await saveOnboarding(user.id, data)
-      // res.user is a sanitized user object with onboarding
       if (res?.user) {
-        // update auth context user so the app reflects onboarding immediately
         setUser(prev => ({ ...prev, ...res.user }))
       }
-      // redirect to dashboard
       nav('/')
     }catch(err){
       console.error('Onboarding save failed', err)
     }
-}
+  }
 
   return (
     <div style={{
@@ -86,7 +97,7 @@ async function finish() {
             alignItems: 'center',
             marginBottom: '20px'
           }}>
-            {[1, 2, 3, 4, 5].map(s => (
+            {[1, 2, 3, 4, 5, 6].map(s => (
               <div key={s} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
                 <div style={{
                   width: '50px',
@@ -104,7 +115,7 @@ async function finish() {
                 }}>
                   {s}
                 </div>
-                {s < 5 && (
+                {s < 6 && (
                   <div style={{
                     flex: 1,
                     height: '4px',
@@ -360,79 +371,157 @@ async function finish() {
           </div>
         )}
 
-        {/* Paso 3: Presupuesto */}
+        {/* Paso 3: AHORRO */}
         {step === 3 && (
           <div>
             <h1 style={{
               fontSize: '32px',
               fontWeight: 'bold',
               marginBottom: '10px',
-              color: '#f8fafcff'
-            }}>PRESUPUESTO INICIAL</h1>
-            <p style={{ color: '#28292bff', marginBottom: '30px' }}>
-              También puedes establecer límites por categoría
+              color: '#f8f8faff'
+            }}>AHORRO</h1>
+            <p style={{ color: '#f6f7f8ff', marginBottom: '30px' }}>
+              Define cuánto de tus ingresos destinarás al ahorro
             </p>
 
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{
-                display: 'block',
-                color: '#f7f8faff',
-                fontWeight: '600',
-                marginBottom: '10px'
+            <div style={{
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              borderRadius: '20px',
+              padding: '30px',
+              marginBottom: '30px',
+              boxShadow: '0 10px 30px rgba(16, 185, 129, 0.3)'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '15px',
+                marginBottom: '25px'
               }}>
-                Presupuesto total mensual
-              </label>
-              <input
-                type="number"
-                value={data.initialBudget || ''}
-                onChange={e => setData({ ...data, initialBudget: Number(e.target.value) })}
-                style={{
-                  width: '100%',
-                  padding: '14px',
-                  borderRadius: '10px',
-                  border: '2px solid #e2e8f0',
-                  fontSize: '16px',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
-            </div>
+                <span style={{ fontSize: '40px' }}>💰</span>
+                <div>
+                  <div style={{ color: 'white', fontSize: '14px', opacity: 0.9 }}>
+                    Ingreso {getFrequencyText()}
+                  </div>
+                  <div style={{ color: 'white', fontSize: '28px', fontWeight: 'bold' }}>
+                    ${data.incomeAmount.toLocaleString()}
+                  </div>
+                </div>
+              </div>
 
-            <div style={{ marginBottom: '30px' }}>
-              {data.frequentCategories.map((c, i) => (
-                <div key={c} style={{
+              <div style={{ marginBottom: '25px' }}>
+                <label style={{
+                  display: 'block',
+                  color: 'white',
+                  fontWeight: '600',
+                  marginBottom: '10px',
+                  fontSize: '16px'
+                }}>
+                  Porcentaje a ahorrar ({data.savingsPercent}%)
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={data.savingsPercent}
+                  onChange={e => {
+                    const percent = Number(e.target.value)
+                    const amount = (data.incomeAmount * percent) / 100
+                    setData({ ...data, savingsPercent: percent, savingsAmount: amount })
+                  }}
+                  style={{
+                    width: '100%',
+                    height: '8px',
+                    borderRadius: '5px',
+                    outline: 'none',
+                    cursor: 'pointer'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '25px' }}>
+                <label style={{
+                  display: 'block',
+                  color: 'white',
+                  fontWeight: '600',
+                  marginBottom: '10px',
+                  fontSize: '16px'
+                }}>
+                  O ingresa una cantidad exacta {getFrequencyText()}
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  max={data.incomeAmount}
+                  value={data.savingsAmount || ''}
+                  onChange={e => {
+                    const amount = Number(e.target.value)
+                    const percent = data.incomeAmount > 0 ? (amount / data.incomeAmount) * 100 : 0
+                    setData({ ...data, savingsAmount: amount, savingsPercent: Math.round(percent) })
+                  }}
+                  placeholder={`Cantidad a ahorrar ${getFrequencyText()}`}
+                  style={{
+                    width: '100%',
+                    padding: '14px',
+                    borderRadius: '10px',
+                    border: '2px solid rgba(255,255,255,0.3)',
+                    background: 'rgba(255,255,255,0.9)',
+                    fontSize: '16px',
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.2)',
+                borderRadius: '15px',
+                padding: '20px',
+                backdropFilter: 'blur(10px)'
+              }}>
+                <div style={{
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '15px',
+                  justifyContent: 'space-between',
                   marginBottom: '15px'
                 }}>
-                  <div style={{
-                    minWidth: '150px',
-                    fontWeight: '600',
-                    color: '#f8fafcff'
-                  }}>
-                    {c}
-                  </div>
-                  <input
-                    placeholder="Límite"
-                    type="number"
-                    onChange={e => {
-                      const copy = [...data.budgetsByCategory]
-                      copy[i] = { category: c, limit: Number(e.target.value), spent: 0 }
-                      setData({ ...data, budgetsByCategory: copy })
-                    }}
-                    style={{
-                      flex: 1,
-                      padding: '12px',
-                      borderRadius: '10px',
-                      border: '2px solid #e2e8f0',
-                      fontSize: '16px',
-                      outline: 'none',
-                      boxSizing: 'border-box'
-                    }}
-                  />
+                  <span style={{ color: 'white', fontWeight: '600' }}>Ahorro {getFrequencyText()}:</span>
+                  <span style={{ color: 'white', fontSize: '20px', fontWeight: 'bold' }}>
+                    ${data.savingsAmount.toFixed(2)}
+                  </span>
                 </div>
-              ))}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between'
+                }}>
+                  <span style={{ color: 'white', fontWeight: '600' }}>Disponible para gastos:</span>
+                  <span style={{ color: 'white', fontSize: '20px', fontWeight: 'bold' }}>
+                    ${(data.incomeAmount - data.savingsAmount).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              borderRadius: '15px',
+              padding: '20px',
+              marginBottom: '30px',
+              border: '2px solid rgba(255, 255, 255, 0.2)'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                marginBottom: '10px'
+              }}>
+                <span style={{ fontSize: '24px' }}>💡</span>
+                <span style={{ color: '#f8f8faff', fontWeight: '600', fontSize: '16px' }}>
+                  Consejo financiero
+                </span>
+              </div>
+              <p style={{ color: '#e5e7ebff', fontSize: '14px', lineHeight: '1.6', margin: 0 }}>
+                Se recomienda ahorrar entre el 10% y 20% de tus ingresos. 
+                En el siguiente paso podrás asignar parte de este ahorro a tus metas financieras.
+              </p>
             </div>
 
             <div style={{ display: 'flex', gap: '10px' }}>
@@ -472,37 +561,154 @@ async function finish() {
           </div>
         )}
 
-        {/* Paso 4: Objetivos */}
+        {/* Paso 4: Presupuesto */}
         {step === 4 && (
           <div>
             <h1 style={{
               fontSize: '32px',
               fontWeight: 'bold',
               marginBottom: '10px',
-              color: '#f9fafcff'
-            }}>OBJETIVOS FINANCIEROS</h1>
-            <p style={{ color: '#2c2d30ff', marginBottom: '30px' }}>
-              Agrega una meta de ahorro
+              color: '#f8fafcff'
+            }}>PRESUPUESTO INICIAL</h1>
+            <p style={{ color: '#28292bff', marginBottom: '30px' }}>
+              También puedes establecer límites por categoría
             </p>
 
-            <AddGoal onAdd={g => setData({ ...data, goals: [...data.goals, g] })} />
+            {/* Resumen de dinero disponible */}
+            <div style={{
+              background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+              borderRadius: '15px',
+              padding: '20px',
+              marginBottom: '25px',
+              color: 'white'
+            }}>
+              <div style={{ fontSize: '14px', opacity: 0.9, marginBottom: '5px' }}>
+                Dinero disponible para presupuesto
+              </div>
+              <div style={{ fontSize: '28px', fontWeight: 'bold' }}>
+                ${(data.incomeAmount - data.savingsAmount).toFixed(2)}
+              </div>
+              <div style={{ fontSize: '12px', opacity: 0.8, marginTop: '8px' }}>
+                (Ingresos: ${data.incomeAmount} - Ahorro: ${data.savingsAmount.toFixed(2)})
+              </div>
+            </div>
 
-            {data.goals.length > 0 && (
-              <div style={{ marginTop: '20px', marginBottom: '30px' }}>
-                {data.goals.map((g, i) => (
-                  <div key={i} style={{
-                    padding: '15px',
-                    background: '#f7fafc',
-                    borderRadius: '10px',
-                    marginBottom: '10px',
-                    border: '2px solid #e2e8f0'
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{
+                display: 'block',
+                color: '#f7f8faff',
+                fontWeight: '600',
+                marginBottom: '10px'
+              }}>
+                Presupuesto total mensual
+              </label>
+              <input
+                type="number"
+                value={data.initialBudget || ''}
+                onChange={e => {
+                  const value = Number(e.target.value)
+                  const maxBudget = data.incomeAmount - data.savingsAmount
+                  if (value <= maxBudget) {
+                    setData({ ...data, initialBudget: value })
+                  }
+                }}
+                max={data.incomeAmount - data.savingsAmount}
+                placeholder={`Máximo: ${(data.incomeAmount - data.savingsAmount).toFixed(2)}`}
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  borderRadius: '10px',
+                  border: '2px solid #e2e8f0',
+                  fontSize: '16px',
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
+              {data.initialBudget > (data.incomeAmount - data.savingsAmount) && (
+                <div style={{
+                  color: '#ef4444',
+                  fontSize: '14px',
+                  marginTop: '8px',
+                  fontWeight: '600'
+                }}>
+                  ⚠️ El presupuesto no puede superar el dinero disponible
+                </div>
+              )}
+            </div>
+
+            <div style={{ marginBottom: '30px' }}>
+              {data.frequentCategories.map((c, i) => {
+                const currentBudget = data.budgetsByCategory[i]?.limit || 0
+                const totalCategoryBudget = data.budgetsByCategory.reduce((sum, b) => sum + (b?.limit || 0), 0)
+                const budgetLimit = data.initialBudget || (data.incomeAmount - data.savingsAmount)
+                const maxForCategory = budgetLimit - totalCategoryBudget + currentBudget
+                
+                return (
+                  <div key={c} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                    marginBottom: '15px'
                   }}>
-                    <div style={{ fontWeight: '600', color: '#2d3748' }}>{g.title}</div>
-                    <div style={{ color: '#718096', fontSize: '14px', marginTop: '5px' }}>
-                      ${g.targetAmount} — {g.targetDate}
+                    <div style={{
+                      minWidth: '150px',
+                      fontWeight: '600',
+                      color: '#f8fafcff'
+                    }}>
+                      {c}
                     </div>
+                    <input
+                      placeholder="Límite"
+                      type="number"
+                      value={data.budgetsByCategory[i]?.limit || ''}
+                      onChange={e => {
+                        const value = Number(e.target.value)
+                        if (value <= maxForCategory) {
+                          const copy = [...data.budgetsByCategory]
+                          copy[i] = { category: c, limit: value, spent: 0 }
+                          setData({ ...data, budgetsByCategory: copy })
+                        }
+                      }}
+                      max={maxForCategory}
+                      style={{
+                        flex: 1,
+                        padding: '12px',
+                        borderRadius: '10px',
+                        border: '2px solid #e2e8f0',
+                        fontSize: '16px',
+                        outline: 'none',
+                        boxSizing: 'border-box'
+                      }}
+                    />
                   </div>
-                ))}
+                )
+              })}
+            </div>
+
+            {/* Indicador de presupuesto asignado */}
+            {data.budgetsByCategory.length > 0 && (
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '12px',
+                padding: '15px',
+                marginBottom: '20px',
+                border: '2px solid rgba(255, 255, 255, 0.2)'
+              }}>
+                <div style={{ color: '#e5e7ebff', fontSize: '14px', marginBottom: '8px' }}>
+                  Presupuesto asignado por categorías:
+                </div>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                  <span style={{ color: '#f8f8faff', fontSize: '18px', fontWeight: 'bold' }}>
+                    ${data.budgetsByCategory.reduce((sum, b) => sum + (b?.limit || 0), 0).toFixed(2)}
+                  </span>
+                  <span style={{ color: '#e5e7ebff', fontSize: '14px' }}>
+                    / ${(data.initialBudget || (data.incomeAmount - data.savingsAmount)).toFixed(2)} del presupuesto
+                  </span>
+                </div>
               </div>
             )}
 
@@ -543,8 +749,123 @@ async function finish() {
           </div>
         )}
 
-        {/* Paso 5: Notificaciones */}
+        {/* Paso 5: Objetivos */}
         {step === 5 && (
+          <div>
+            <h1 style={{
+              fontSize: '32px',
+              fontWeight: 'bold',
+              marginBottom: '10px',
+              color: '#f9fafcff'
+            }}>OBJETIVOS FINANCIEROS</h1>
+            <p style={{ color: '#2c2d30ff', marginBottom: '30px' }}>
+              Agrega metas de ahorro y asigna parte de tu ahorro mensual
+            </p>
+
+            {data.savingsAmount > 0 && (
+              <div style={{
+                background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+                borderRadius: '15px',
+                padding: '20px',
+                marginBottom: '25px',
+                color: 'white'
+              }}>
+                <div style={{ fontSize: '14px', opacity: 0.9, marginBottom: '5px' }}>
+                  Ahorro {getFrequencyText()} disponible
+                </div>
+                <div style={{ fontSize: '24px', fontWeight: 'bold' }}>
+                  ${data.savingsAmount.toFixed(2)}
+                </div>
+                {data.goals.length > 0 && (
+                  <div style={{ fontSize: '12px', opacity: 0.8, marginTop: '10px' }}>
+                    {(() => {
+                      const totalAllocated = data.goals.reduce((sum, g) => sum + (g.monthlyAllocation || 0), 0)
+                      return `Asignado: ${totalAllocated.toFixed(2)} | Disponible: ${(data.savingsAmount - totalAllocated).toFixed(2)}`
+                    })()}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <AddGoal 
+              onAdd={g => setData({ ...data, goals: [...data.goals, g] })}
+              availableSavings={data.savingsAmount}
+              frequencyText={getFrequencyText()}
+            />
+
+            {data.goals.length > 0 && (
+              <div style={{ marginTop: '20px', marginBottom: '30px' }}>
+                {data.goals.map((g, i) => (
+                  <div key={i} style={{
+                    padding: '15px',
+                    background: '#f7fafc',
+                    borderRadius: '10px',
+                    marginBottom: '10px',
+                    border: '2px solid #e2e8f0'
+                  }}>
+                    <div style={{ fontWeight: '600', color: '#2d3748', marginBottom: '5px' }}>
+                      {g.title}
+                    </div>
+                    <div style={{ color: '#718096', fontSize: '14px', marginBottom: '8px' }}>
+                      Meta: ${g.targetAmount} — {g.targetDate}
+                    </div>
+                    {g.monthlyAllocation > 0 && (
+                      <div style={{
+                        display: 'inline-block',
+                        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                        color: 'white',
+                        padding: '4px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '600'
+                      }}>
+                        ${g.monthlyAllocation}/periodo del ahorro
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button
+                onClick={() => setStep(4)}
+                style={{
+                  flex: 1,
+                  padding: '16px',
+                  borderRadius: '12px',
+                  border: '2px solid #e2e8f0',
+                  background: 'white',
+                  color: '#2d3748',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}
+              >
+                Atrás
+              </button>
+              <button
+                onClick={() => setStep(6)}
+                style={{
+                  flex: 1,
+                  padding: '16px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+                  color: 'white',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Paso 6: Notificaciones */}
+        {step === 6 && (
           <div>
             <h1 style={{
               fontSize: '32px',
@@ -603,7 +924,7 @@ async function finish() {
 
             <div style={{ display: 'flex', gap: '10px' }}>
               <button
-                onClick={() => setStep(4)}
+                onClick={() => setStep(5)}
                 style={{
                   flex: 1,
                   padding: '16px',
@@ -642,18 +963,26 @@ async function finish() {
   )
 }
 
-function AddGoal({ onAdd }) {
+function AddGoal({ onAdd, availableSavings = 0 }) {
   const [title, setTitle] = useState('')
   const [targetAmount, setTargetAmount] = useState('')
   const [targetDate, setTargetDate] = useState('')
+  const [monthlyAllocation, setMonthlyAllocation] = useState('')
 
   function submit(e) {
     e.preventDefault()
     if (!title || !targetAmount || !targetDate) return
-    onAdd({ title, targetAmount: Number(targetAmount), targetDate, savedAmount: 0 })
+    onAdd({ 
+      title, 
+      targetAmount: Number(targetAmount), 
+      targetDate, 
+      savedAmount: 0,
+      monthlyAllocation: Number(monthlyAllocation) || 0
+    })
     setTitle('')
     setTargetAmount('')
     setTargetDate('')
+    setMonthlyAllocation('')
   }
 
   return (
@@ -699,12 +1028,41 @@ function AddGoal({ onAdd }) {
           padding: '14px',
           borderRadius: '10px',
           border: '2px solid #e2e8f0',
-          marginBottom: '15px',
+          marginBottom: '10px',
           fontSize: '16px',
           outline: 'none',
           boxSizing: 'border-box'
         }}
       />
+      {availableSavings > 0 && (
+        <div style={{ marginBottom: '10px' }}>
+          <label style={{
+            display: 'block',
+            color: '#f6f7f8ff',
+            fontSize: '14px',
+            fontWeight: '600',
+            marginBottom: '8px'
+          }}>
+            ¿Cuánto del ahorro destinar a esta meta? (Opcional)
+          </label>
+          <input
+            placeholder={`Máximo: ${availableSavings.toFixed(2)}`}
+            type="number"
+            value={monthlyAllocation}
+            onChange={e => setMonthlyAllocation(e.target.value)}
+            max={availableSavings}
+            style={{
+              width: '100%',
+              padding: '14px',
+              borderRadius: '10px',
+              border: '2px solid #e2e8f0',
+              fontSize: '16px',
+              outline: 'none',
+              boxSizing: 'border-box'
+            }}
+          />
+        </div>
+      )}
       <button
         onClick={submit}
         type="button"
@@ -714,7 +1072,7 @@ function AddGoal({ onAdd }) {
           borderRadius: '12px',
           border: 'none',
           background: 'linear-gradient(135deg, #f34d48ff 0%, #f34d48ff 100%)',
-          color: '#2d3748',
+          color: 'white',
           fontSize: '16px',
           fontWeight: 'bold',
           cursor: 'pointer'

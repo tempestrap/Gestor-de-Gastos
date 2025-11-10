@@ -8,6 +8,7 @@ import BudgetsPage from './pages/BudgetsPage'
 import StatsPage from './pages/StatsPage'
 import WalletPage from './pages/WalletPage'
 import GoalsPage from './pages/GoalsPage'
+import TipsPage from './pages/TipsPage'
 import { useAuth } from './AuthContext'
 
 function Protected({ children }) {
@@ -30,6 +31,7 @@ export default function App(){
       <Route path="/budgets" element={<Protected><BudgetsPage/></Protected>} />
     <Route path="/goals" element={<Protected><GoalsPage/></Protected>} />
       <Route path="/stats" element={<Protected><StatsPage/></Protected>} />
+      <Route path="/tips" element={<Protected><TipsPage/></Protected>} />
     </Routes>
   )
 }

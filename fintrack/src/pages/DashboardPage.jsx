@@ -43,6 +43,23 @@ export default function DashboardPage() {
   if (isNaN(amount)) return setMvError('Monto inválido')
   if (mvType === 'gasto' && amount > 0) amount = -Math.abs(amount)
   if (mvType === 'ingreso' && amount < 0) amount = Math.abs(amount)
+  
+  // Validar que no quede en negativo si es un gasto
+  if (mvType === 'gasto') {
+    const movements = data?.recent || []
+    const incomesFromMov = movements.reduce((s,m)=> m.amount>0 ? s + Number(m.amount) : s, 0)
+    const expensesFromMov = movements.reduce((s,m)=> m.amount<0 ? s + Math.abs(Number(m.amount)) : s, 0)
+    const initialIncome = Number(user?.onboarding?.incomeAmount ?? user?.onboarding?.initialBudget ?? 0)
+    const totalIngresos = initialIncome + incomesFromMov
+    const totalGastos = expensesFromMov
+    const disponibleActual = totalIngresos - totalGastos
+    const disponibleDespuesDelGasto = disponibleActual + amount // amount es negativo
+    
+    if (disponibleDespuesDelGasto < 0) {
+      return setMvError(`⚠️ No puedes realizar este gasto. Te quedarían $${disponibleDespuesDelGasto.toFixed(2)}. Solo tienes $${disponibleActual.toFixed(2)} disponibles.`)
+    }
+  }
+  
     setSaving(true)
     try{
       // Build payload: do NOT include category for ingresos to avoid any
@@ -106,6 +123,93 @@ export default function DashboardPage() {
                   })()
                 }
               </div>
+
+              {/* Alerta de bajo presupuesto */}
+              {
+                (() => {
+                  const movements = data?.recent || []
+                  const incomesFromMov = movements.reduce((s,m)=> m.amount>0 ? s + Number(m.amount) : s, 0)
+                  const expensesFromMov = movements.reduce((s,m)=> m.amount<0 ? s + Math.abs(Number(m.amount)) : s, 0)
+                  const initialIncome = Number(user?.onboarding?.incomeAmount ?? user?.onboarding?.initialBudget ?? 0)
+                  const totalIngresos = initialIncome + incomesFromMov
+                  const totalGastos = expensesFromMov
+                  const disponible = totalIngresos - totalGastos
+                  const porcentajeDisponible = initialIncome > 0 ? (disponible / initialIncome) * 100 : 100
+
+                  if (porcentajeDisponible <= 10 && porcentajeDisponible > 0) {
+                    return (
+                      <div style={{
+                        padding: '16px 20px',
+                        backgroundColor: '#fff3cd',
+                        border: '2px solid #ffc107',
+                        borderRadius: '12px',
+                        marginBottom: '16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        boxShadow: '0 2px 8px rgba(255, 193, 7, 0.2)'
+                      }}>
+                        <div style={{
+                          fontSize: '24px',
+                          flexShrink: 0
+                        }}>⚠️</div>
+                        <div>
+                          <div style={{
+                            fontWeight: '700',
+                            color: '#856404',
+                            marginBottom: '4px',
+                            fontSize: '15px'
+                          }}>
+                            ¡Advertencia! Te estás quedando sin dinero
+                          </div>
+                          <div style={{
+                            color: '#856404',
+                            fontSize: '14px'
+                          }}>
+                            Solo te queda el {porcentajeDisponible.toFixed(1)}% de tu ingreso inicial (${disponible.toFixed(2)} de ${initialIncome.toFixed(2)}). Controla tus gastos.
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  } else if (disponible <= 0) {
+                    return (
+                      <div style={{
+                        padding: '16px 20px',
+                        backgroundColor: '#f8d7da',
+                        border: '2px solid #dc3545',
+                        borderRadius: '12px',
+                        marginBottom: '16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        boxShadow: '0 2px 8px rgba(220, 53, 69, 0.2)'
+                      }}>
+                        <div style={{
+                          fontSize: '24px',
+                          flexShrink: 0
+                        }}>🚨</div>
+                        <div>
+                          <div style={{
+                            fontWeight: '700',
+                            color: '#721c24',
+                            marginBottom: '4px',
+                            fontSize: '15px'
+                          }}>
+                            ¡Alerta! Te has quedado sin dinero
+                          </div>
+                          <div style={{
+                            color: '#721c24',
+                            fontSize: '14px'
+                          }}>
+                            Tu disponible es ${disponible.toFixed(2)}. No puedes realizar más gastos hasta que agregues ingresos.
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+                  return null
+                })()
+              }
 
               {/* Quick movement form placed under KPI cards for better visual hierarchy */}
               <div className="card quick-mv">

@@ -69,8 +69,8 @@
   ],
   "balances": {
     "1": {
-      "current": -22000,
-      "available": -22000
+      "current": 5000,
+      "available": 5000
     }
   },
   "movements": [
@@ -81,6 +81,38 @@
       "amount": -24000,
       "category": "Transporte",
       "date": "2025-11-10T23:27:18.092Z"
+    },
+    {
+      "id": 2,
+      "ownerId": 1,
+      "title": "Loteria",
+      "amount": 50000,
+      "category": "Otros",
+      "date": "2025-11-10T23:31:40.698Z"
+    },
+    {
+      "id": 3,
+      "ownerId": 1,
+      "title": "DIDI",
+      "amount": 500,
+      "category": "Otros",
+      "date": "2025-11-10T23:32:15.733Z"
+    },
+    {
+      "id": 4,
+      "ownerId": 1,
+      "title": "Concierto",
+      "amount": -19000,
+      "category": "Entretenimiento",
+      "date": "2025-11-10T23:39:31.255Z"
+    },
+    {
+      "id": 5,
+      "ownerId": 1,
+      "title": "Estafa",
+      "amount": -4500,
+      "category": "nse",
+      "date": "2025-11-10T23:40:32.259Z"
     }
   ],
   "budgets": [
@@ -126,7 +158,7 @@
       "title": "Michael Jackson",
       "targetAmount": 2500,
       "targetDate": "2026-04-24",
-      "savedAmount": 0,
+      "savedAmount": 1000,
       "ownerId": 1
     }
   ],

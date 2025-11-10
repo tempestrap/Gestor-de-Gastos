@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import Logo from '../assets/logo.svg'
-import { AiOutlineHome, AiOutlineWallet } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlineWallet, AiOutlineBulb } from 'react-icons/ai'
 import { FiBarChart2 } from 'react-icons/fi'
 import { RiFolder3Line } from 'react-icons/ri'
 import { GiBullseye } from 'react-icons/gi'
@@ -39,6 +39,9 @@ export default function Sidebar(){
         <NavLink to="/stats" className={({isActive})=> isActive? 'active':''}>
           <Tippy content="Estadísticas"><span style={{display:'inline-flex',alignItems:'center'}}><FiBarChart2 className="icon-strong" style={{verticalAlign:'middle',marginRight:10}} size={20}/> Estadísticas</span></Tippy>
         </NavLink>
+          <NavLink to="/tips" className={({isActive})=> isActive? 'active':''}>
+            <Tippy content="Consejos"><span style={{display:'inline-flex',alignItems:'center'}}><AiOutlineBulb className="icon-strong" style={{verticalAlign:'middle',marginRight:10}} size={20}/> Consejos</span></Tippy>
+          </NavLink>
       </nav>
 
       <div style={{marginTop:'auto'}}>

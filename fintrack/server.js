@@ -9,7 +9,15 @@ const DB_FILE = path.resolve(__dirname, 'db.json');
 function readDB() {
   if (!fs.existsSync(DB_FILE)) {
     // If DB file missing, initialize a minimal structure
-    const initial = { users: [], balances: {}, movements: [], budgets: [], goals: [], statistics: {} };
+    const initial = { 
+      users: [], 
+      balances: {}, 
+      movements: [], 
+      budgets: [], 
+      goals: [], 
+      statistics: {},
+      savings: {} // Nuevo: información de ahorros por usuario
+    };
     writeDB(initial);
     return ensureDBStructure(initial);
   }
@@ -32,6 +40,7 @@ function ensureDBStructure(db){
   if (!Array.isArray(db.budgets)) { db.budgets = []; changed = true }
   if (!Array.isArray(db.goals)) { db.goals = []; changed = true }
   if (!db.statistics || typeof db.statistics !== 'object') { db.statistics = {}; changed = true }
+  if (!db.savings || typeof db.savings !== 'object') { db.savings = {}; changed = true }
   if (changed) {
     try { writeDB(db) } catch(e){ console.error('Could not repair DB file', e) }
   }
@@ -86,6 +95,105 @@ app.post('/auth/register', (req, res) => {
   res.json({ id, name, email });
 });
 
+// Savings endpoints
+app.get('/data/savings/:userId', (req, res) => {
+  const db = readDB();
+  const userId = Number(req.params.userId);
+  const savings = db.savings[userId] || {
+    totalSavings: 0,
+    availableSavings: 0,
+    nextDepositDate: null,
+    frequency: null,
+    goals: []
+  };
+  res.json(savings);
+});
+
+app.post('/data/savings/:userId', (req, res) => {
+  const db = readDB();
+  const userId = Number(req.params.userId);
+  const savingsUpdate = req.body;
+  
+  db.savings[userId] = {
+    ...db.savings[userId],
+    ...savingsUpdate
+  };
+  
+  writeDB(db);
+  res.json(db.savings[userId]);
+});
+
+// Función para calcular la próxima fecha según la frecuencia
+function calculateNextDate(date, frequency) {
+  const nextDate = new Date(date);
+  switch (frequency) {
+    case 'diario':
+      nextDate.setDate(nextDate.getDate() + 1);
+      break;
+    case 'semanal':
+      nextDate.setDate(nextDate.getDate() + 7);
+      break;
+    case 'quincenal':
+      nextDate.setDate(nextDate.getDate() + 15);
+      break;
+    case 'mensual':
+      nextDate.setMonth(nextDate.getMonth() + 1);
+      break;
+  }
+  return nextDate;
+}
+
+// Endpoint para procesar depósitos automáticos
+app.post('/data/process-deposits', (req, res) => {
+  const db = readDB();
+  const now = new Date();
+  let processed = [];
+
+  // Revisar cada usuario con configuración de ahorro
+  Object.entries(db.savings).forEach(([userId, savings]) => {
+    userId = Number(userId);
+    if (!savings.nextDepositDate) return;
+
+    const nextDeposit = new Date(savings.nextDepositDate);
+    if (nextDeposit <= now) {
+      // Procesar el depósito
+      const incomeAmount = savings.incomeAmount || 0;
+      const savingsAmount = savings.totalSavings || 0;
+
+      // Crear movimiento de ingreso
+      db.movements.push({
+        ownerId: userId,
+        type: 'ingreso',
+        amount: incomeAmount,
+        date: now.toISOString(),
+        category: 'Ingreso automático',
+        note: 'Depósito automático periódico'
+      });
+
+      // Actualizar balance
+      if (!db.balances[userId]) db.balances[userId] = { total: 0 };
+      db.balances[userId].total += incomeAmount;
+
+      // Actualizar metas de ahorro
+      savings.goals.forEach(goal => {
+        if (goal.monthlyAllocation) {
+          goal.savedAmount = (goal.savedAmount || 0) + goal.monthlyAllocation;
+        }
+      });
+
+      // Actualizar próxima fecha de depósito
+      savings.nextDepositDate = calculateNextDate(nextDeposit, savings.frequency).toISOString();
+      processed.push(userId);
+    }
+  });
+
+  if (processed.length > 0) {
+    writeDB(db);
+  }
+
+  res.json({ processed });
+});
+
 // A few resource endpoints
 app.get('/data/dashboard', (req, res) => {
   const db = readDB();
@@ -95,7 +203,8 @@ app.get('/data/dashboard', (req, res) => {
   // support per-user balances and movements if stored with ownerId
   const balances = userId ? (db.balances && db.balances[userId]) || {} : db.balances || {};
   const recent = userId ? (db.movements || []).filter(m => m.ownerId === userId) : db.movements || [];
-  res.json({ balances, recent, budgets, goals });
+  const savings = userId ? db.savings[userId] || null : null;
+  res.json({ balances, recent, budgets, goals, savings });
 });
 
 app.get('/data/statistics', (req, res) => {
@@ -156,10 +265,32 @@ app.post('/auth/onboarding', (req, res) => {
     db.balances[userId] = { current: onboarding.incomeAmount, available: onboarding.incomeAmount }
   }
 
+  // Configurar ahorros del usuario
+  if (!db.savings) db.savings = {}
+  if (onboarding.savingsAmount) {
+    const savingsConfig = {
+      totalSavings: onboarding.savingsAmount,
+      availableSavings: onboarding.savingsAmount,
+      frequency: onboarding.incomeFrequency,
+      nextDepositDate: onboarding.incomeDate,
+      incomeAmount: onboarding.incomeAmount,
+      goals: onboarding.goals.map(g => ({
+        ...g,
+        savedAmount: 0
+      }))
+    }
+
+    // Restar las asignaciones mensuales del ahorro disponible
+    const totalAllocated = onboarding.goals.reduce((sum, g) => sum + (g.monthlyAllocation || 0), 0)
+    savingsConfig.availableSavings -= totalAllocated
+
+    db.savings[userId] = savingsConfig
+  }
+
   writeDB(db);
   // Do not return password to the client. Return a sanitized user object.
   const safeUser = { id: user.id, name: user.name, email: user.email, onboarding: user.onboarding };
-  res.json({ user: safeUser, budgets: db.budgets, goals: db.goals });
+  res.json({ user: safeUser, budgets: db.budgets, goals: db.goals, savings: db.savings[userId] });
 });
 
 // Create a movement (expense or income)

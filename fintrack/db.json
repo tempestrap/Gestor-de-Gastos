@@ -1,201 +1,60 @@
 {
-  "test": 1760930574654,
   "users": [
     {
       "id": 1,
-      "name": "AutoTest",
-      "email": "autotest1760931789673@test.local",
-      "password": "p",
-      "onboarding": {
-        "incomeAmount": 3000,
-        "budgetsByCategory": [
-          {
-            "category": "Comida",
-            "limit": 300
-          },
-          {
-            "category": "Transporte",
-            "limit": 80
-          }
-        ],
-        "goals": [
-          {
-            "title": "Vacaciones",
-            "targetAmount": 1000,
-            "targetDate": "2025-12-31"
-          }
-        ]
-      }
-    },
-    {
-      "id": 2,
-      "name": "AutoTest",
-      "email": "autotest1760932053541@test.local",
-      "password": "p",
-      "onboarding": null
-    },
-    {
-      "id": 3,
-      "name": "Kristel",
-      "email": "kris.guillen18@gmail.com",
-      "password": "1234",
-      "onboarding": {
-        "frequentCategories": [
-          "Vivienda",
-          "Transporte",
-          "Comida"
-        ],
-        "incomeSource": "Papá",
-        "incomeAmount": 4200,
-        "budgetsByCategory": [
-          {
-            "category": "Vivienda",
-            "limit": 1800
-          },
-          {
-            "category": "Transporte",
-            "limit": 980
-          },
-          {
-            "category": "Comida",
-            "limit": 540
-          }
-        ],
-        "goals": [
-          {
-            "title": "Pecera",
-            "targetAmount": 600,
-            "targetDate": "2025-11-19"
-          }
-        ],
-        "notifications": {
-          "email": true,
-          "push": false,
-          "thresholds": {
-            "budgetPercent": 80
-          }
-        },
-        "initialBudget": 4200
-      }
-    },
-    {
-      "id": 4,
-      "name": "RAPTOR",
+      "name": "Marcos Fernando Morales Escobar",
       "email": "marquitosfer09@gmail.com",
       "password": "AAaa1122",
       "onboarding": {
         "frequentCategories": [
-          "Entretenimiento",
+          "Suscripciones",
+          "Alimentación",
           "Transporte",
-          "Compras",
-          "Comida"
+          "Pagos",
+          "Salud"
         ],
-        "incomeSource": "SEMANA",
-        "incomeAmount": 2400,
+        "incomeSource": "Mesada",
+        "incomeAmount": 2000,
+        "incomeDate": "2025-11-17",
+        "incomeFrequency": "mensual",
+        "savingsAmount": 200,
+        "savingsPercent": 10,
+        "goalAllocations": [],
+        "initialBudget": 1800,
         "budgetsByCategory": [
           {
-            "category": "Entretenimiento",
-            "limit": 130
+            "category": "Suscripciones",
+            "limit": 200,
+            "spent": 0
+          },
+          {
+            "category": "Alimentación",
+            "limit": 600,
+            "spent": 0
           },
           {
             "category": "Transporte",
-            "limit": 400
-          },
-          {
-            "category": "Compras",
-            "limit": 1000
-          },
-          {
-            "category": "Comida",
-            "limit": 700
-          }
-        ],
-        "goals": [
-          {
-            "title": "PECERA",
-            "targetAmount": 200,
-            "targetDate": "2025-12-04"
-          }
-        ],
-        "notifications": {
-          "email": true,
-          "push": false,
-          "thresholds": {
-            "budgetPercent": 80
-          }
-        },
-        "initialBudget": 2400
-      }
-    },
-    {
-      "id": 5,
-      "name": "AutoTestX",
-      "email": "autotestx@example.com",
-      "password": "test123",
-      "onboarding": null
-    },
-    {
-      "id": 6,
-      "name": "Marcos Fernando",
-      "email": "marquitosfer099@gmail.com",
-      "password": "AAaa1100",
-      "onboarding": {
-        "frequentCategories": [
-          "Salud",
-          "Inversión",
-          "Préstamos",
-          "Ropa",
-          "Pagos",
-          "Educación",
-          "Vacaciones"
-        ],
-        "incomeSource": "TRABAJO",
-        "incomeAmount": 25000,
-        "incomeDate": "2025-12-01",
-        "initialBudget": 25000,
-        "budgetsByCategory": [
-          {
-            "category": "Salud",
-            "limit": 2000,
-            "spent": 0
-          },
-          {
-            "category": "Inversión",
-            "limit": 1500,
-            "spent": 0
-          },
-          {
-            "category": "Préstamos",
-            "limit": 3000,
-            "spent": 0
-          },
-          {
-            "category": "Ropa",
-            "limit": 900,
+            "limit": 400,
             "spent": 0
           },
           {
             "category": "Pagos",
-            "limit": 3500,
+            "limit": 200,
             "spent": 0
           },
           {
-            "category": "Educación",
-            "limit": 8000,
-            "spent": 0
-          },
-          {
-            "category": "Vacaciones",
-            "limit": 35000,
+            "category": "Salud",
+            "limit": 200,
             "spent": 0
           }
         ],
         "goals": [
           {
-            "title": "VACACIONES",
-            "targetAmount": 75000,
-            "targetDate": "2025-12-25",
-            "savedAmount": 0
+            "title": "Michael Jackson",
+            "targetAmount": 2500,
+            "targetDate": "2026-04-24",
+            "savedAmount": 0,
+            "monthlyAllocation": 150
           }
         ],
         "notifications": {
@@ -210,297 +69,84 @@
   ],
   "balances": {
     "1": {
-      "current": 3000,
-      "available": 3000
-    },
-    "3": {
-      "current": 3930,
-      "available": 3930
-    },
-    "4": {
-      "current": 6960,
-      "available": 6960
-    },
-    "6": {
-      "current": 58400,
-      "available": 58400
+      "current": -22000,
+      "available": -22000
     }
   },
   "movements": [
     {
       "id": 1,
-      "ownerId": 3,
-      "title": "Renta",
-      "amount": 1800,
-      "category": "Vivienda",
-      "date": "2025-10-20T05:36:42.351Z"
-    },
-    {
-      "id": 2,
-      "ownerId": 3,
-      "title": "Pago de renta",
-      "amount": -1800,
-      "category": "Vivienda",
-      "date": "2025-10-20T05:47:02.150Z"
-    },
-    {
-      "id": 3,
-      "ownerId": 3,
-      "title": "pasaje",
-      "amount": -20,
+      "ownerId": 1,
+      "title": "MOTO",
+      "amount": -24000,
       "category": "Transporte",
-      "date": "2025-10-20T19:12:22.745Z"
-    },
-    {
-      "id": 4,
-      "ownerId": 3,
-      "title": "netflix",
-      "amount": -250,
-      "category": "entretenimiento",
-      "date": "2025-10-20T19:13:43.955Z"
-    },
-    {
-      "id": 5,
-      "ownerId": 4,
-      "title": "PAGO",
-      "amount": -500,
-      "category": "Compras",
-      "date": "2025-10-24T02:07:51.545Z"
-    },
-    {
-      "id": 6,
-      "ownerId": 6,
-      "title": "Ropita",
-      "amount": -1000,
-      "category": "Ropa",
-      "date": "2025-10-24T02:11:10.335Z"
-    },
-    {
-      "id": 7,
-      "ownerId": 6,
-      "title": "Curacion",
-      "amount": -600,
-      "category": "Salud",
-      "date": "2025-10-24T02:11:35.794Z"
-    },
-    {
-      "id": 8,
-      "ownerId": 6,
-      "title": "Quincena",
-      "amount": 25000,
-      "category": "TRABAJO",
-      "date": "2025-10-24T02:12:15.186Z"
-    },
-    {
-      "id": 9,
-      "ownerId": 6,
-      "title": "Invertir",
-      "amount": -8000,
-      "category": "Inversión",
-      "date": "2025-10-28T06:05:14.031Z"
-    },
-    {
-      "id": 10,
-      "ownerId": 6,
-      "title": "Retirar",
-      "amount": 18000,
-      "category": "Inversión",
-      "date": "2025-10-28T06:05:35.137Z"
-    },
-    {
-      "id": 11,
-      "ownerId": 4,
-      "title": "nose",
-      "amount": 1500,
-      "category": "Compras",
-      "date": "2025-10-28T06:42:02.986Z"
-    },
-    {
-      "id": 12,
-      "ownerId": 4,
-      "title": "MAMA",
-      "amount": 3500,
-      "category": "Compras",
-      "date": "2025-10-28T06:45:10.514Z"
-    },
-    {
-      "id": 13,
-      "ownerId": 4,
-      "title": "Semana",
-      "amount": 100,
-      "category": "Otros",
-      "date": "2025-10-28T07:02:34.535Z"
-    },
-    {
-      "id": 14,
-      "ownerId": 4,
-      "title": "colectivo",
-      "amount": -40,
-      "category": "Transporte",
-      "date": "2025-10-28T07:02:53.260Z"
+      "date": "2025-11-10T23:27:18.092Z"
     }
   ],
   "budgets": [
     {
       "id": 1,
-      "category": "Comida",
-      "limit": 300,
+      "category": "Suscripciones",
+      "limit": 200,
       "spent": 0,
       "ownerId": 1
     },
     {
       "id": 2,
-      "category": "Transporte",
-      "limit": 80,
+      "category": "Alimentación",
+      "limit": 600,
       "spent": 0,
       "ownerId": 1
     },
     {
       "id": 3,
-      "category": "Vivienda",
-      "limit": 1800,
-      "spent": 3600,
-      "ownerId": 3
+      "category": "Transporte",
+      "limit": 400,
+      "spent": 24000,
+      "ownerId": 1
     },
     {
       "id": 4,
-      "category": "Transporte",
-      "limit": 980,
-      "spent": 20,
-      "ownerId": 3
+      "category": "Pagos",
+      "limit": 200,
+      "spent": 0,
+      "ownerId": 1
     },
     {
       "id": 5,
-      "category": "Comida",
-      "limit": 540,
-      "spent": 0,
-      "ownerId": 3
-    },
-    {
-      "id": 6,
-      "category": "Entretenimiento",
-      "limit": 130,
-      "spent": 0,
-      "ownerId": 4
-    },
-    {
-      "id": 7,
-      "category": "Transporte",
-      "limit": 400,
-      "spent": 40,
-      "ownerId": 4
-    },
-    {
-      "id": 8,
-      "category": "Compras",
-      "limit": 1000,
-      "spent": 5500,
-      "ownerId": 4
-    },
-    {
-      "id": 9,
-      "category": "Comida",
-      "limit": 700,
-      "spent": 0,
-      "ownerId": 4
-    },
-    {
-      "category": "",
-      "limit": 0,
-      "spent": 0,
-      "ownerId": 3,
-      "id": 10
-    },
-    {
-      "category": "entretenimiento",
-      "limit": 500,
-      "spent": 0,
-      "ownerId": 3,
-      "id": 11
-    },
-    {
-      "id": 12,
       "category": "Salud",
-      "limit": 2000,
-      "spent": 600,
-      "ownerId": 6
-    },
-    {
-      "id": 13,
-      "category": "Inversión",
-      "limit": 1500,
-      "spent": 26000,
-      "ownerId": 6
-    },
-    {
-      "id": 14,
-      "category": "Préstamos",
-      "limit": 3000,
+      "limit": 200,
       "spent": 0,
-      "ownerId": 6
-    },
-    {
-      "id": 15,
-      "category": "Ropa",
-      "limit": 900,
-      "spent": 1000,
-      "ownerId": 6
-    },
-    {
-      "id": 16,
-      "category": "Pagos",
-      "limit": 3500,
-      "spent": 0,
-      "ownerId": 6
-    },
-    {
-      "id": 17,
-      "category": "Educación",
-      "limit": 8000,
-      "spent": 0,
-      "ownerId": 6
-    },
-    {
-      "id": 18,
-      "category": "Vacaciones",
-      "limit": 35000,
-      "spent": 0,
-      "ownerId": 6
+      "ownerId": 1
     }
   ],
   "goals": [
     {
       "id": 1,
-      "title": "Vacaciones",
-      "targetAmount": 1000,
-      "targetDate": "2025-12-31",
+      "title": "Michael Jackson",
+      "targetAmount": 2500,
+      "targetDate": "2026-04-24",
       "savedAmount": 0,
       "ownerId": 1
-    },
-    {
-      "id": 2,
-      "title": "Pecera",
-      "targetAmount": 600,
-      "targetDate": "2025-11-19",
-      "savedAmount": 0,
-      "ownerId": 3
-    },
-    {
-      "id": 3,
-      "title": "PECERA",
-      "targetAmount": 200,
-      "targetDate": "2025-12-04",
-      "savedAmount": 0,
-      "ownerId": 4
-    },
-    {
-      "id": 4,
-      "title": "VACACIONES",
-      "targetAmount": 75000,
-      "targetDate": "2025-12-25",
-      "savedAmount": 3500,
-      "ownerId": 6
     }
   ],
-  "statistics": {}
+  "statistics": {},
+  "savings": {
+    "1": {
+      "totalSavings": 200,
+      "availableSavings": 50,
+      "frequency": "mensual",
+      "nextDepositDate": "2025-11-17",
+      "incomeAmount": 2000,
+      "goals": [
+        {
+          "title": "Michael Jackson",
+          "targetAmount": 2500,
+          "targetDate": "2026-04-24",
+          "savedAmount": 0,
+          "monthlyAllocation": 150
+        }
+      ]
+    }
+  }
 }

@@ -8,6 +8,7 @@ import KpiCard from '../components/KpiCard'
 import WalletPanel from '../components/WalletPanel'
 import Movements from '../components/Movements'
 import StatsChart from '../components/StatsChart'
+import SavingsPanel from '../components/SavingsPanel'
 import { useAuth } from "../AuthContext";
 import Logo from '../assets/logo.svg'
 
@@ -130,6 +131,12 @@ export default function DashboardPage() {
                 {mvError && <div className="error" style={{marginTop:8}}>{mvError}</div>}
                 {mvSuccess && <div className="success" style={{marginTop:8}}>{mvSuccess}</div>}
               </div>
+
+              {data?.savings && (
+                <div style={{ marginBottom: '20px' }}>
+                  <SavingsPanel savings={data.savings} />
+                </div>
+              )}
 
               <div className="card subtle">
                 <div className="card-header">

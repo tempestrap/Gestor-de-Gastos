@@ -2,10 +2,11 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import Logo from '../assets/logo.svg'
-import { AiOutlineHome, AiOutlineWallet, AiOutlineBulb } from 'react-icons/ai'
-import { FiBarChart2 } from 'react-icons/fi'
+import { AiOutlineHome, AiOutlineWallet, AiOutlineBulb, AiOutlineCalendar } from 'react-icons/ai'
+import { FiBarChart2, FiTrendingUp } from 'react-icons/fi'
 import { RiFolder3Line } from 'react-icons/ri'
-import { GiBullseye } from 'react-icons/gi'
+import { GiBullseye, GiCrystalBall } from 'react-icons/gi'
+import { BiGitCompare } from 'react-icons/bi'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 
@@ -83,6 +84,33 @@ export default function Sidebar(){
             <span style={menuItemStyle}>
               <FiBarChart2 style={iconStyle} size={24}/> 
               <span>Estadísticas</span>
+            </span>
+          </Tippy>
+        </NavLink>
+        
+        <NavLink to="/comparison" className={({isActive})=> isActive? 'active':''}>
+          <Tippy content="Compara tus gastos mes a mes">
+            <span style={menuItemStyle}>
+              <BiGitCompare style={iconStyle} size={26}/> 
+              <span>Comparación</span>
+            </span>
+          </Tippy>
+        </NavLink>
+        
+        <NavLink to="/calendar" className={({isActive})=> isActive? 'active':''}>
+          <Tippy content="Calendario visual de tus gastos diarios">
+            <span style={menuItemStyle}>
+              <AiOutlineCalendar style={iconStyle} size={26}/> 
+              <span>Calendario</span>
+            </span>
+          </Tippy>
+        </NavLink>
+        
+        <NavLink to="/projections" className={({isActive})=> isActive? 'active':''}>
+          <Tippy content="Proyecta tu futuro financiero">
+            <span style={menuItemStyle}>
+              <GiCrystalBall style={iconStyle} size={24}/> 
+              <span>Proyecciones</span>
             </span>
           </Tippy>
         </NavLink>

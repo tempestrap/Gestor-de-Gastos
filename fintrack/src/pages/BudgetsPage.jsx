@@ -63,11 +63,40 @@ export default function BudgetsPage(){
                       <div className="muted" style={{fontSize:12}}>{Math.round(((b.spent||0)/(b.limit||1))*100)}% usado</div>
                     </div>
                   </div>
-                  <div className="budget-progress" style={{marginTop:10}}>
-                    <Tippy content={`Presupuesto ${b.category}: ${Math.round(((b.spent||0)/(b.limit||1))*100)}% gastado`}>
-                      <i style={{width: `${Math.min(100, ((b.spent||0) / (b.limit||1)) * 100)}%`}}></i>
-                    </Tippy>
-                  </div>
+                  {(() => {
+                    const spent = Number(b.spent||0)
+                    const limit = Number(b.limit||0) || 0
+                    const pct = limit > 0 ? (spent/limit)*100 : 0
+                    const over = limit > 0 ? spent > limit : false
+                    let bar = 'linear-gradient(90deg, #22c55e, #16a34a)' // verde <50
+                    if (pct >= 50) bar = 'linear-gradient(90deg, #facc15, #eab308)'
+                    if (pct >= 80) bar = 'linear-gradient(90deg, #fb923c, #f97316)'
+                    if (over) bar = 'linear-gradient(90deg, #ef4444, #dc2626)'
+                    const width = `${Math.min(100, Math.max(0, pct))}%`
+                    return (
+                      <>
+                        {over && (
+                          <div style={{
+                            marginTop:8,
+                            padding:'10px 12px',
+                            background:'#fdecea',
+                            border:'2px solid #f87171',
+                            color:'#7f1d1d',
+                            borderRadius:8,
+                            fontSize:13,
+                            fontWeight:700
+                          }}>
+                            ¡Has excedido el presupuesto de {b.category}! (${spent} / ${limit})
+                          </div>
+                        )}
+                        <div className="budget-progress" style={{marginTop:10, background:'#eef2f7'}}>
+                          <Tippy content={`Presupuesto ${b.category}: ${Math.round(pct)}% gastado`}>
+                            <i style={{width, background: bar}}></i>
+                          </Tippy>
+                        </div>
+                      </>
+                    )
+                  })()}
                 </div>
               ))}
             </div>

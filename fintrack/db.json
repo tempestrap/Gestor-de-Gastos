@@ -69,8 +69,8 @@
   ],
   "balances": {
     "1": {
-      "current": 5000,
-      "available": 5000
+      "current": 6300,
+      "available": 6300
     }
   },
   "movements": [
@@ -113,6 +113,22 @@
       "amount": -4500,
       "category": "nse",
       "date": "2025-11-10T23:40:32.259Z"
+    },
+    {
+      "id": 6,
+      "ownerId": 1,
+      "title": "n",
+      "amount": 1500,
+      "category": "Otros",
+      "date": "2025-11-11T00:37:49.503Z"
+    },
+    {
+      "id": 7,
+      "ownerId": 1,
+      "title": "Comida",
+      "amount": -200,
+      "category": "Alimentación",
+      "date": "2025-11-11T00:46:09.627Z"
     }
   ],
   "budgets": [
@@ -127,7 +143,7 @@
       "id": 2,
       "category": "Alimentación",
       "limit": 600,
-      "spent": 0,
+      "spent": 200,
       "ownerId": 1
     },
     {
